@@ -11,8 +11,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        clientWid1.cpp
+        clientWid1.cpp \
+    clientWid2.cpp \
+    clientWid3.cpp
 
-HEADERS  += clientWid1.h
+HEADERS  += clientWid1.h \
+    clientWid2.h \
+    clientWid3.h
 
-FORMS    += clientWid1.ui
+FORMS    += clientWid1.ui \
+    clientWid2.ui \
+    clientWid3.ui
