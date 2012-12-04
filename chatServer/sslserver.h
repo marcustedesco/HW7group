@@ -1,3 +1,8 @@
+//Marcus Tedesco and Amre Kebaish
+//HW7 Group Project
+//ECE 3574
+//Due: Dec. 9, 2012
+
 #ifndef SSLSERVER_H
 #define SSLSERVER_H
 
@@ -21,6 +26,7 @@ public slots:
 
 protected:
     void incomingConnection(int socketDescriptor);
+
 private:
     QList<QSslSocket *> m_secureSocketList;
     
