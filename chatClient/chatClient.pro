@@ -21,4 +21,5 @@ HEADERS  += clientWid1.h \
 
 FORMS    += clientWid1.ui \
     clientWid2.ui \
-    clientWid3.ui
+    clientWid3.ui \
+    clientWid1.ui

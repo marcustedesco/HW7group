@@ -1,8 +1,3 @@
-//clientWid1.h
-//
-//
-//Authors: Marcus Tedesco, Amre Kebaish
-//
 #ifndef CLIENTWID1_H
 #define CLIENTWID1_H
 
