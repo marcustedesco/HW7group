@@ -1,3 +1,5 @@
+//Marcus and Amre
+
 #include <QtGui/QApplication>
 #include "serverWid.h"
 
