@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'clientWid2.ui'
 **
-** Created: Tue Dec 4 16:30:11 2012
+** Created: Tue Dec 4 20:19:57 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -27,7 +27,7 @@ class Ui_clientWid2
 public:
     QGridLayout *gridLayout;
     QComboBox *clientListBox;
-    QPushButton *pushButton;
+    QPushButton *connectButton;
 
     void setupUi(QWidget *clientWid2)
     {
@@ -41,10 +41,10 @@ public:
 
         gridLayout->addWidget(clientListBox, 0, 0, 1, 1);
 
-        pushButton = new QPushButton(clientWid2);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        connectButton = new QPushButton(clientWid2);
+        connectButton->setObjectName(QString::fromUtf8("connectButton"));
 
-        gridLayout->addWidget(pushButton, 1, 0, 1, 1);
+        gridLayout->addWidget(connectButton, 1, 0, 1, 1);
 
 
         retranslateUi(clientWid2);
@@ -59,7 +59,7 @@ public:
         clientListBox->insertItems(0, QStringList()
          << QApplication::translate("clientWid2", "Client List", 0, QApplication::UnicodeUTF8)
         );
-        pushButton->setText(QApplication::translate("clientWid2", "Connect", 0, QApplication::UnicodeUTF8));
+        connectButton->setText(QApplication::translate("clientWid2", "Connect", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

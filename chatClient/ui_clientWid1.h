@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'clientWid1.ui'
 **
-** Created: Tue Dec 4 16:30:11 2012
+** Created: Tue Dec 4 19:08:32 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

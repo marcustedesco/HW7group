@@ -22,6 +22,13 @@ public:
     
 private:
     Ui::clientWid2 *ui;
+
+private slots:
+    void sendButtonPushed();
+
+signals:
+    void buttonPushed(QString);
+
 };
 
 #endif // CLIENTWID2_H

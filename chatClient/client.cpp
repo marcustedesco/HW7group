@@ -9,3 +9,8 @@ bool client::initialize(QString ip, QString port, QString name)
 {
     return true;
 }
+
+void client::connectTo(QString clientName)
+{
+    //connects this client to the CLIENTNAME
+}

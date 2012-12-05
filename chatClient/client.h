@@ -13,6 +13,10 @@ signals:
     
 public slots:
     bool initialize(QString ip, QString port, QString name);
+    void connectTo(QString clientName);
+
+public:
+    QString myName;
     
 };
 

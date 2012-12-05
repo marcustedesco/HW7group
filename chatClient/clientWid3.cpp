@@ -11,9 +11,22 @@ clientWid3::clientWid3(QWidget *parent) :
     ui(new Ui::clientWid3)
 {
     ui->setupUi(this);
+
+    connect(ui->messageLine,SIGNAL(returnPressed()),this,SLOT(sendMessage()));
 }
 
 clientWid3::~clientWid3()
 {
     delete ui;
+}
+
+void clientWid3::setName(QString friendName)
+{
+    toName = friendName;
+    //set window name to friendName
+}
+
+void clientWid3::sendMessage()
+{
+    emit send(ui->messageLine->text(), toName);
 }

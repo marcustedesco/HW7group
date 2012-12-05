@@ -7,6 +7,8 @@
 #define CONTROLLER_H
 
 #include <QObject>
+#include <QList>
+#include <QPair>
 #include "clientWid1.h"
 #include "clientWid2.h"
 #include "clientWid3.h"
@@ -23,6 +25,8 @@ public slots:
 
 private slots:
     void attemptConnect();
+    void connectToClient(QString name);
+    void sendMessage(QString message, QString toName);
 
 signals:
     void clientMade();
@@ -30,6 +34,8 @@ signals:
 private:
     clientWid1* wid1;
     clientWid2* wid2;
+    client* myClient;
+    QList< QPair<clientWid3*,QString> >* myFriends;
     
 };
 

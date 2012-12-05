@@ -11,9 +11,16 @@ clientWid2::clientWid2(QWidget *parent) :
     ui(new Ui::clientWid2)
 {
     ui->setupUi(this);
+
+    connect(ui->connectButton,SIGNAL(pressed()),this, SLOT(sendButtonPushed()));
 }
 
 clientWid2::~clientWid2()
 {
     delete ui;
+}
+
+void clientWid2::sendButtonPushed()
+{
+    emit buttonPushed(ui->clientListBox->itemText(ui->clientListBox->currentIndex()));
 }

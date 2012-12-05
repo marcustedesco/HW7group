@@ -19,9 +19,18 @@ class clientWid3 : public QWidget
 public:
     explicit clientWid3(QWidget *parent = 0);
     ~clientWid3();
+
+    void setName(QString friendName);
     
 private:
     Ui::clientWid3 *ui;
+    QString toName;
+
+private slots:
+    void sendMessage();
+
+signals:
+    void send(QString,QString);
 };
 
 #endif // CLIENTWID3_H

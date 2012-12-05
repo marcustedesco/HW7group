@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'clientWid3.h'
 **
-** Created: Tue Dec 4 18:21:17 2012
+** Created: Tue Dec 4 20:16:14 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,26 +23,38 @@ static const uint qt_meta_data_clientWid3[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: signature, parameters, type, tag, flags
+      14,   12,   11,   11, 0x05,
+
+ // slots: signature, parameters, type, tag, flags
+      36,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_clientWid3[] = {
-    "clientWid3\0"
+    "clientWid3\0\0,\0send(QString,QString)\0"
+    "sendMessage()\0"
 };
 
 void clientWid3::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    Q_UNUSED(_o);
-    Q_UNUSED(_id);
-    Q_UNUSED(_c);
-    Q_UNUSED(_a);
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
+        clientWid3 *_t = static_cast<clientWid3 *>(_o);
+        switch (_id) {
+        case 0: _t->send((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 1: _t->sendMessage(); break;
+        default: ;
+        }
+    }
 }
 
 const QMetaObjectExtraData clientWid3::staticMetaObjectExtraData = {
@@ -76,6 +88,18 @@ int clientWid3::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 2)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 2;
+    }
     return _id;
+}
+
+// SIGNAL 0
+void clientWid3::send(QString _t1, QString _t2)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE
