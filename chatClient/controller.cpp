@@ -47,22 +47,7 @@ void controller::attemptConnect()
 void controller::connectToClient(QString name)
 {
     //tell client to tell server it wants to connect to client NAME
-   /* myClient->connectTo(name);
-
-    clientWid3* myWid3 = new clientWid3();
-
-    myWid3->setName(name);
-
-    connect(myWid3,SIGNAL(send(QString,QString)),this,SLOT(sendMessage(QString,QString)));
-
-    myWid3->show();
-
-    myFriends->append(qMakePair(myWid3,name));*/
+    myClient->connectTo(name);
 
     //should also take client NAME out of the combobox so that it can not be clicked again
-}
-
-void controller::sendMessage(QString message, QString toName)
-{
-    //sends MESSAGE from myClient to TONAME
 }

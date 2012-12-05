@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'controller.h'
 **
-** Created: Tue Dec 4 20:18:22 2012
+** Created: Tue Dec 4 23:02:54 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_controller[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -37,7 +37,6 @@ static const uint qt_meta_data_controller[] = {
       25,   11,   11,   11, 0x0a,
       32,   11,   11,   11, 0x08,
       54,   49,   11,   11, 0x08,
-      94,   79,   11,   11, 0x08,
 
        0        // eod
 };
@@ -45,7 +44,6 @@ static const uint qt_meta_data_controller[] = {
 static const char qt_meta_stringdata_controller[] = {
     "controller\0\0clientMade()\0init()\0"
     "attemptConnect()\0name\0connectToClient(QString)\0"
-    "message,toName\0sendMessage(QString,QString)\0"
 };
 
 void controller::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -58,7 +56,6 @@ void controller::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 1: _t->init(); break;
         case 2: _t->attemptConnect(); break;
         case 3: _t->connectToClient((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 4: _t->sendMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         default: ;
         }
     }
@@ -96,9 +93,9 @@ int controller::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 4;
     }
     return _id;
 }

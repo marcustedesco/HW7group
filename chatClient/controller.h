@@ -26,7 +26,7 @@ public slots:
 private slots:
     void attemptConnect();
     void connectToClient(QString name);
-    void sendMessage(QString message, QString toName);
+    //void sendMessage(QString message, QString toName);
 
 signals:
     void clientMade();
@@ -35,7 +35,7 @@ private:
     clientWid1* wid1;
     clientWid2* wid2;
     client* myClient;
-    QList< QPair<clientWid3*,QString> >* myFriends;
+    //QList< QPair<clientWid3*,QString> >* myFriends;
     
 };
 
