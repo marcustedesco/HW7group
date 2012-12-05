@@ -23,7 +23,7 @@ public:
     QString myName;
 
 private:
-    QList<clientWid3*>* myFriends;
+    QList<clientWid3*> myFriends;
     
 };
 

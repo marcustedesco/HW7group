@@ -14,7 +14,7 @@ controller::controller(QObject *parent) :
 }
 
 void controller::init()
-{
+{ 
     //if connect is pushed check if the client was able to connect to the server
     connect(wid1,SIGNAL(buttonPushed()),this,SLOT(attemptConnect()));
 
@@ -23,7 +23,6 @@ void controller::init()
     connect(this,SIGNAL(clientMade()),wid1,SLOT(close()));
 
     connect(wid2,SIGNAL(buttonPushed(QString)),this,SLOT(connectToClient(QString)));
-    //connect(wid2,SIGNAL(buttonPushed(QString)),wid3,SLOT())
 
     wid1->show();
 }
@@ -37,8 +36,11 @@ void controller::attemptConnect()
      client* myClient = new client();
      bool success = myClient->initialize(myIP, myPort, myName);
 
-     if(success)
+     if(success){
          emit clientMade();
+         wid2->setWindowTitle(wid1->getName());
+     }
+
      //if not successful client should display error dialog box?
      //or the error dialog should be made in here if the initialize
      //returns an error string

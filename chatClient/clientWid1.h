@@ -7,6 +7,7 @@
 #define CLIENTWID1_H
 
 #include <QWidget>
+#include <QDebug>
 #include <QString>
 
 namespace Ui {
@@ -23,6 +24,9 @@ public:
     
 private:
     Ui::clientWid1 *ui;
+    bool ipChanged;
+    bool portChanged;
+    bool nameChanged;
 
 public slots:
     QString getIP();
@@ -30,6 +34,9 @@ public slots:
     QString getName();
 
 private slots:
+    void ipBoxChanged();
+    void portBoxChanged();
+    void nameBoxChanged();
     void sendButtonPushed();
 
 signals:

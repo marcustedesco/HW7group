@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'clientWid1.h'
 **
-** Created: Tue Dec 4 18:21:17 2012
+** Created: Tue Dec 4 23:45:04 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_clientWid1[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -38,13 +38,17 @@ static const uint qt_meta_data_clientWid1[] = {
       43,   11,   27,   11, 0x0a,
       53,   11,   27,   11, 0x0a,
       63,   11,   11,   11, 0x08,
+      78,   11,   11,   11, 0x08,
+      95,   11,   11,   11, 0x08,
+     112,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_clientWid1[] = {
     "clientWid1\0\0buttonPushed()\0QString\0"
-    "getIP()\0getPort()\0getName()\0"
+    "getIP()\0getPort()\0getName()\0ipBoxChanged()\0"
+    "portBoxChanged()\0nameBoxChanged()\0"
     "sendButtonPushed()\0"
 };
 
@@ -61,7 +65,10 @@ void clientWid1::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
         case 3: { QString _r = _t->getName();
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 4: _t->sendButtonPushed(); break;
+        case 4: _t->ipBoxChanged(); break;
+        case 5: _t->portBoxChanged(); break;
+        case 6: _t->nameBoxChanged(); break;
+        case 7: _t->sendButtonPushed(); break;
         default: ;
         }
     }
@@ -99,9 +106,9 @@ int clientWid1::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 8;
     }
     return _id;
 }

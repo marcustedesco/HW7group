@@ -17,13 +17,11 @@ void client::connectTo(QString clientName)
 
     myWid3->setName(clientName);
 
-    qDebug() << "connectTo";
-
     connect(myWid3,SIGNAL(send(QString,QString)),this,SLOT(sendMessage(QString,QString)));
 
     myWid3->show();
 
-    //myFriends->push_back(myWid3);
+    myFriends.push_back(myWid3);
 }
 
 void client::sendMessage(QString message, QString toName)

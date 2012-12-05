@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'clientWid1.ui'
 **
-** Created: Tue Dec 4 19:08:32 2012
+** Created: Tue Dec 4 23:41:16 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -105,6 +105,7 @@ public:
 
         connectButton = new QPushButton(clientWid1);
         connectButton->setObjectName(QString::fromUtf8("connectButton"));
+        connectButton->setEnabled(false);
 
         gridLayout->addWidget(connectButton, 5, 0, 1, 3);
 
@@ -116,7 +117,7 @@ public:
 
     void retranslateUi(QWidget *clientWid1)
     {
-        clientWid1->setWindowTitle(QApplication::translate("clientWid1", "Form", 0, QApplication::UnicodeUTF8));
+        clientWid1->setWindowTitle(QApplication::translate("clientWid1", "Connect...", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("clientWid1", "Connect to:", 0, QApplication::UnicodeUTF8));
         label_4->setText(QApplication::translate("clientWid1", "Connect as:", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("clientWid1", "IP:", 0, QApplication::UnicodeUTF8));

@@ -24,6 +24,7 @@ void clientWid3::setName(QString friendName)
 {
     toName = friendName;
     //set window name to friendName
+    this->setWindowTitle(toName);
 }
 
 void clientWid3::sendMessage()
