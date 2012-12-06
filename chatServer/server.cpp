@@ -11,7 +11,7 @@ server::server(QObject *parent) :
             close();
             return;*/
 
-            //^^^^^^^^^^^^^^^^^^^^^^^^
+            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             // Tell gui to take care of it
             //____________________________
         }
@@ -34,5 +34,23 @@ server::server(QObject *parent) :
 
 void server::processMess()
 {
+    //recieve the message
+    QDataStream in(secureSocket);
+   in.setVersion(QDataStream::Qt_4_0);
+
+   if (blockSize == 0) {
+       if (secureSocket->bytesAvailable() < (int)sizeof(quint16))
+           return;
+       in >> blockSize;
+   }
+
+   if (secureSocket->bytesAvailable() < blockSize)
+       return;
+
+   QString receivedMess;
+   in >> receivedMess;
+
+   //Break down the received message and do something
+
 
 }
