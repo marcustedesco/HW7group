@@ -7,6 +7,7 @@
 #define SERVERWID_H
 
 #include <QWidget>
+#include <QString>
 
 namespace Ui {
 class serverWid;
@@ -22,6 +23,9 @@ public:
     
 private:
     Ui::serverWid *ui;
+
+public slots:
+    void update(QString line);
 };
 
 #endif // SERVERWID_H

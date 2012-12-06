@@ -4,13 +4,17 @@
 //Due: Dec. 9, 2012
 
 #include <QtGui/QApplication>
-#include "serverWid.h"
+#include "controller.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    serverWid w;
-    w.show();
+
+    controller* myControl = new controller();
+    myControl->init();
+
+    //serverWid w;
+    //w.show();
     
     return a.exec();
 }

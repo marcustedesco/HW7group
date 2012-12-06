@@ -11,9 +11,16 @@ serverWid::serverWid(QWidget *parent) :
     ui(new Ui::serverWid)
 {
     ui->setupUi(this);
+
+
 }
 
 serverWid::~serverWid()
 {
     delete ui;
+}
+
+void serverWid::update(QString line)
+{
+    ui->messageBox->append(line);
 }

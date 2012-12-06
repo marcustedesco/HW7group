@@ -10,7 +10,9 @@ bool client::initialize(QString ip, QString port, QString name)
     //needs to make this but then talk to server to determine if
     //this name is already taken
 
-    QString ipAddress;
+    //i dont think we need this part since we are going the ip from the user.
+    //this is to find a default ip to connect to
+    /*QString ipAddress;
     QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
     // use the first non-localhost IPv4 address
     for (int i = 0; i < ipAddressesList.size(); ++i) {
@@ -24,12 +26,39 @@ bool client::initialize(QString ip, QString port, QString name)
     if (ipAddress.isEmpty())
     {
         ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
-    }
+    }*/
 
     secureSocket = new QSslSocket(this);
 
+    secureSocket->abort();
+    secureSocket->setPeerVerifyMode(QSslSocket::QueryPeer);
+    secureSocket->connectToHostEncrypted(ip, port.toInt());
+    if (!secureSocket->waitForEncrypted(1000)) {
+         qDebug() << "Waited for 1 second for encryption handshake without success";
+         //QMessageBox::critical(this, "ERROR", "ERROR: Could not connect to host");
+         return false;
+    }
+
+    qDebug() << "Successfully waited for secure handshake...";
+
+    QByteArray block;
+    QDataStream out(&block, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_4_0);
+    qDebug() << "Creating first message";
+    out << (quint16)0;
+    out << name;
+    out.device()->seek(0);
+    out << (quint16)(block.size() - sizeof(quint16));
+
+    qDebug() << "Successfully waited for secure handshake...";
+    //connect(clientConnection, SIGNAL(disconnected()),clientConnection, SLOT(deleteLater()));
+    secureSocket->write(block);
+    secureSocket->disconnectFromHost();
 
     //****I think this belongs on the server side***/
+    //this belongs on this side. if it was on server side then client would
+    //not know what the error was. server can also display error in the server
+    //text box if we want
   /*  QMessageBox::critical(this, tr("Server Connection Error"),
                           tr("Unable to start the server: %1.")
                           .arg(sslServer->errorString()));*/

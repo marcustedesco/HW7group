@@ -15,11 +15,15 @@ signals:
     
 public slots:
     void processMess();
+    void testDisplay();
 
 private:
     SSLServer *sslServer;
     QList<QString> clientList;
-    
+    QString myIP;
+
+signals:
+    void updateServer(QString);
 };
 
 #endif // SERVER_H
