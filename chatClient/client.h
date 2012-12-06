@@ -5,7 +5,7 @@
 #include <QList>
 #include <QDebug>
 #include <QMessageBox>
-#include <QSslSocket>
+#include <QtNetwork>
 #include "clientWid3.h"
 
 class client : public QObject
@@ -20,13 +20,16 @@ public slots:
 
 private slots:
     void sendMessage(QString message, QString toName);
-
+    void receiveMess();
 public:
     QString myName;
 
 private:
     QList<clientWid3*> myFriends;
     QSslSocket *secureSocket;
+    quint16 blockSize;
+    QString hostName;
+    int portNum;
     
 };
 

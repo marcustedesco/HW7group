@@ -16,3 +16,4 @@ SOURCES += client.cpp \
            clientWid3.cpp \
            controller.cpp \
            main.cpp
+QT += network
