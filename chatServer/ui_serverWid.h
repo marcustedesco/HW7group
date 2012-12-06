@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'serverWid.ui'
 **
-** Created: Wed Dec 5 22:18:43 2012
+** Created: Thu Dec 6 14:55:59 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -49,7 +49,7 @@ public:
 
     void retranslateUi(QWidget *serverWid)
     {
-        serverWid->setWindowTitle(QApplication::translate("serverWid", "serverWid", 0, QApplication::UnicodeUTF8));
+        serverWid->setWindowTitle(QApplication::translate("serverWid", "Server", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

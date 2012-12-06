@@ -14,8 +14,11 @@ public:
 signals:
     
 public slots:
+    void displayStartUpInfo();
     void processMess();
-    void testDisplay();
+
+private slots:
+    void sendWelcome();
 
 private:
     SSLServer *sslServer;

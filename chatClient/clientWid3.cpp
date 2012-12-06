@@ -31,3 +31,8 @@ void clientWid3::sendMessage()
 {
     emit send(ui->messageLine->text(), toName);
 }
+
+void clientWid3::update(QString line)
+{
+    ui->messagesBox->append(line);
+}

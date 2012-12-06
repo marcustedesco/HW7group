@@ -11,6 +11,6 @@ void controller::init()
 {
     connect(myServer,SIGNAL(updateServer(QString)),myServerWid,SLOT(update(QString)));
 
-    myServer->testDisplay();
+    myServer->displayStartUpInfo();
     myServerWid->show();
 }

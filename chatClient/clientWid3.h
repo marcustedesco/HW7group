@@ -26,6 +26,9 @@ private:
     Ui::clientWid3 *ui;
     QString toName;
 
+public slots:
+    void update(QString line);
+
 private slots:
     void sendMessage();
 

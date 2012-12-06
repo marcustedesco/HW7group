@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'server.h'
 **
-** Created: Thu Dec 6 13:41:04 2012
+** Created: Thu Dec 6 14:57:19 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_server[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -35,14 +35,16 @@ static const uint qt_meta_data_server[] = {
 
  // slots: signature, parameters, type, tag, flags
       30,    7,    7,    7, 0x0a,
-      44,    7,    7,    7, 0x0a,
+      51,    7,    7,    7, 0x0a,
+      65,    7,    7,    7, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_server[] = {
     "server\0\0updateServer(QString)\0"
-    "processMess()\0testDisplay()\0"
+    "displayStartUpInfo()\0processMess()\0"
+    "sendWelcome()\0"
 };
 
 void server::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -52,8 +54,9 @@ void server::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         server *_t = static_cast<server *>(_o);
         switch (_id) {
         case 0: _t->updateServer((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 1: _t->processMess(); break;
-        case 2: _t->testDisplay(); break;
+        case 1: _t->displayStartUpInfo(); break;
+        case 2: _t->processMess(); break;
+        case 3: _t->sendWelcome(); break;
         default: ;
         }
     }
@@ -91,9 +94,9 @@ int server::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     }
     return _id;
 }

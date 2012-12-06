@@ -3,6 +3,9 @@
 client::client(QObject *parent) :
     QObject(parent)
 {
+    secureSocket = new QSslSocket(this);
+
+    connect(secureSocket, SIGNAL(readyRead()), this, SLOT(receiveMess()));
 }
 
 bool client::initialize(QString ip, QString port, QString name)
@@ -27,8 +30,6 @@ bool client::initialize(QString ip, QString port, QString name)
     {
         ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
     }*/
-
-    secureSocket = new QSslSocket(this);
 
     secureSocket->abort();
     secureSocket->setPeerVerifyMode(QSslSocket::QueryPeer);
@@ -99,6 +100,26 @@ void client::sendMessage(QString message, QString toName)
 
 void client::receiveMess()
 {
+    qDebug() << "receiving message method";
 
+    QDataStream in(secureSocket);
+    in.setVersion(QDataStream::Qt_4_0);
+
+    if (blockSize == 0) {
+        if (secureSocket->bytesAvailable() < (int)sizeof(quint16))
+            return;
+        in >> blockSize;
+    }
+
+    if (secureSocket->bytesAvailable() < blockSize)
+        return;
+
+    QString message;
+    in >> message;
+
+    qDebug() << "message from server: " << message;
+
+    //update the correct client window
+    //myfriends....myWid3->update(message);
 }
 

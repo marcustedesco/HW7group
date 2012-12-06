@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'clientWid3.h'
 **
-** Created: Tue Dec 4 23:14:18 2012
+** Created: Thu Dec 6 14:50:02 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_clientWid3[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -34,14 +34,15 @@ static const uint qt_meta_data_clientWid3[] = {
       14,   12,   11,   11, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      36,   11,   11,   11, 0x08,
+      41,   36,   11,   11, 0x0a,
+      57,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_clientWid3[] = {
     "clientWid3\0\0,\0send(QString,QString)\0"
-    "sendMessage()\0"
+    "line\0update(QString)\0sendMessage()\0"
 };
 
 void clientWid3::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -51,7 +52,8 @@ void clientWid3::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         clientWid3 *_t = static_cast<clientWid3 *>(_o);
         switch (_id) {
         case 0: _t->send((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 1: _t->sendMessage(); break;
+        case 1: _t->update((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 2: _t->sendMessage(); break;
         default: ;
         }
     }
@@ -89,9 +91,9 @@ int clientWid3::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

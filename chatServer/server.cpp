@@ -4,6 +4,7 @@ server::server(QObject *parent) :
     QObject(parent)
 {
     sslServer = new SSLServer(this);
+
     if (!sslServer->listen()) {
        /* QMessageBox::critical(this, tr("Secure Fortune Server"),
                               tr("Unable to start the server: %1.")
@@ -29,18 +30,42 @@ server::server(QObject *parent) :
     if (myIP.isEmpty())
         myIP = QHostAddress(QHostAddress::LocalHost).toString();
 
-    emit updateServer("My IP address is: " + myIP);
-
-    connect(sslServer, SIGNAL(newConnection()), this, SLOT(processMess()));
+    connect(sslServer, SIGNAL(newConnection()), this, SLOT(sendWelcome()));
+    //connect(sslServer, SIGNAL(newConnection()), this, SLOT(processMess()));
 }
 
-void server::testDisplay()
+void server::displayStartUpInfo()
 {
     emit updateServer("My IP address is: " + myIP);
+    emit updateServer("Running on port: " + QString::number(sslServer->serverPort()));
+}
+
+void server::sendWelcome()
+{
+    QByteArray block;
+    QDataStream out(&block, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_4_0);
+    qDebug() << "Sending welcome message...";
+    out << (quint16)0;
+    out << "Welcome to the server!";
+    out.device()->seek(0);
+    out << (quint16)(block.size() - sizeof(quint16));
+
+    QSslSocket *clientConnection = sslServer->nextPendingConnection();
+    if (!clientConnection->waitForEncrypted(1000)){
+        qDebug() << "Waited for 1 second for encryption handshake without success";
+        return;
+    }
+    qDebug() << "Successfully waited for secure handshake...";
+    connect(clientConnection, SIGNAL(disconnected()),
+            clientConnection, SLOT(deleteLater()));
+    clientConnection->write(block);
+    clientConnection->disconnectFromHost();
 }
 
 void server::processMess()
-{/*
+{
+    /*
     //recieve the message
     QDataStream in(secureSocket);
     in.setVersion(QDataStream::Qt_4_0);

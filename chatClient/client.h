@@ -30,7 +30,6 @@ private:
     quint16 blockSize;
     QString hostName;
     int portNum;
-    
 };
 
 #endif // CLIENT_H
