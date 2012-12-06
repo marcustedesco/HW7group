@@ -1,15 +1,18 @@
-//Marcus Tedesco and Amre Kebaish
-//HW7 Group Project
-//ECE 3574
-//Due: Dec. 9, 2012
-
 #ifndef SERVER_H
 #define SERVER_H
 
-class Server
+#include <QObject>
+
+class server : public QObject
 {
+    Q_OBJECT
 public:
-    Server();
+    explicit server(QObject *parent = 0);
+    
+signals:
+    
+public slots:
+    
 };
 
 #endif // SERVER_H

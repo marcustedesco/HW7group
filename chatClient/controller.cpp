@@ -33,7 +33,7 @@ void controller::attemptConnect()
      QString myPort = wid1->getPort();
      QString myName = wid1->getName();
 
-     client* myClient = new client();
+     myClient = new client();
      bool success = myClient->initialize(myIP, myPort, myName);
 
      if(success){
@@ -41,6 +41,7 @@ void controller::attemptConnect()
          wid2->setWindowTitle(wid1->getName());
      }
 
+     //ACTUALLY DO THIS IN CLIENT WITH  #include <QMessageBox>
      //if not successful client should display error dialog box?
      //or the error dialog should be made in here if the initialize
      //returns an error string

@@ -38,10 +38,10 @@ void SSLServer::incomingConnection(int socketDescriptor)
 
     // check that the certificate / private key are not null
     if (secureSocket->localCertificate().isNull()) {
-       qDebug() << "WARNING: The local certificate appears to be null! ";
+        qDebug() << "WARNING: The local certificate appears to be null! ";
     }
     if (secureSocket->privateKey().isNull()) {
-       qDebug() << "WARNING: The private key appears to be null! ";
+        qDebug() << "WARNING: The private key appears to be null! ";
     }
 
     // debug message on success

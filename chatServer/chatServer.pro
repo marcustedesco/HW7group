@@ -8,7 +8,11 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 # Input
-HEADERS += server.h serverWid.h sslserver.h
+HEADERS += serverWid.h \
+    server.h \
+    SSLServer.h
 FORMS += serverWid.ui
-SOURCES += main.cpp server.cpp serverWid.cpp sslserver.cpp
+SOURCES += main.cpp serverWid.cpp \
+    server.cpp \
+    SSLServer.cpp
 QT += network

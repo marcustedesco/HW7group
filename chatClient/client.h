@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QList>
 #include <QDebug>
+#include <QMessageBox>
+#include <QSslSocket>
 #include "clientWid3.h"
 
 class client : public QObject
@@ -24,6 +26,7 @@ public:
 
 private:
     QList<clientWid3*> myFriends;
+    QSslSocket *secureSocket;
     
 };
 

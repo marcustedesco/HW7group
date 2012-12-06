@@ -17,7 +17,6 @@ class SSLServer : public QTcpServer
     Q_OBJECT
 public:
     SSLServer(QObject *parent = 0);
-
     QSslSocket *nextPendingConnection();
     
 signals:
@@ -28,7 +27,7 @@ protected:
     void incomingConnection(int socketDescriptor);
 
 private:
-    QList<QSslSocket *> m_secureSocketList;
+    QList<QSslSocket*> m_secureSocketList;
     
 };
 
