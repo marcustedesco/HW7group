@@ -2,6 +2,8 @@
 #define SERVER_H
 
 #include <QObject>
+#include <QtNetwork>
+#include "SSLServer.h"
 
 class server : public QObject
 {
@@ -12,6 +14,11 @@ public:
 signals:
     
 public slots:
+    void processMess();
+
+private:
+    SSLServer *sslServer;
+    QList<QString> clientList;
     
 };
 

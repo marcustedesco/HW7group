@@ -4,7 +4,7 @@
 //Due: Dec. 9, 2012
 
 #include <QDebug>
-#include "sslserver.h"
+#include "SSLServer.h"
 
 // For the documentation: Suppose you create an SSL server class as a subclass
 // of QTcpServer. You would override QTcpServer::incomingConnection() with

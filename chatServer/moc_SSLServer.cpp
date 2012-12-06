@@ -1,15 +1,15 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'serverWid.h'
+** Meta object code from reading C++ file 'SSLServer.h'
 **
-** Created: Wed Dec 5 22:24:03 2012
+** Created: Wed Dec 5 22:24:05 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "serverWid.h"
+#include "SSLServer.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'serverWid.h' doesn't include <QObject>."
+#error "The header file 'SSLServer.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 63
 #error "This file was generated using the moc from 4.8.1. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -17,7 +17,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_serverWid[] = {
+static const uint qt_meta_data_SSLServer[] = {
 
  // content:
        6,       // revision
@@ -33,11 +33,11 @@ static const uint qt_meta_data_serverWid[] = {
        0        // eod
 };
 
-static const char qt_meta_stringdata_serverWid[] = {
-    "serverWid\0"
+static const char qt_meta_stringdata_SSLServer[] = {
+    "SSLServer\0"
 };
 
-void serverWid::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void SSLServer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     Q_UNUSED(_o);
     Q_UNUSED(_id);
@@ -45,35 +45,35 @@ void serverWid::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
     Q_UNUSED(_a);
 }
 
-const QMetaObjectExtraData serverWid::staticMetaObjectExtraData = {
+const QMetaObjectExtraData SSLServer::staticMetaObjectExtraData = {
     0,  qt_static_metacall 
 };
 
-const QMetaObject serverWid::staticMetaObject = {
-    { &QWidget::staticMetaObject, qt_meta_stringdata_serverWid,
-      qt_meta_data_serverWid, &staticMetaObjectExtraData }
+const QMetaObject SSLServer::staticMetaObject = {
+    { &QTcpServer::staticMetaObject, qt_meta_stringdata_SSLServer,
+      qt_meta_data_SSLServer, &staticMetaObjectExtraData }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &serverWid::getStaticMetaObject() { return staticMetaObject; }
+const QMetaObject &SSLServer::getStaticMetaObject() { return staticMetaObject; }
 #endif //Q_NO_DATA_RELOCATION
 
-const QMetaObject *serverWid::metaObject() const
+const QMetaObject *SSLServer::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *serverWid::qt_metacast(const char *_clname)
+void *SSLServer::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_serverWid))
-        return static_cast<void*>(const_cast< serverWid*>(this));
-    return QWidget::qt_metacast(_clname);
+    if (!strcmp(_clname, qt_meta_stringdata_SSLServer))
+        return static_cast<void*>(const_cast< SSLServer*>(this));
+    return QTcpServer::qt_metacast(_clname);
 }
 
-int serverWid::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int SSLServer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QWidget::qt_metacall(_c, _id, _a);
+    _id = QTcpServer::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     return _id;
