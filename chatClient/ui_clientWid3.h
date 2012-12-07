@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'clientWid3.ui'
 **
-** Created: Tue Dec 4 16:30:11 2012
+** Created: Thu Dec 6 21:00:08 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -40,6 +40,7 @@ public:
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         messagesBox = new QTextEdit(clientWid3);
         messagesBox->setObjectName(QString::fromUtf8("messagesBox"));
+        messagesBox->setReadOnly(true);
 
         gridLayout->addWidget(messagesBox, 0, 0, 1, 1);
 

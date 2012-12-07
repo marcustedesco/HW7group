@@ -12,9 +12,7 @@ server::server(QObject *parent) :
         close();
         return;*/
 
-        //^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         // Tell gui to take care of it
-        //____________________________
     }
 
     QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
@@ -31,6 +29,7 @@ server::server(QObject *parent) :
         myIP = QHostAddress(QHostAddress::LocalHost).toString();
 
     connect(sslServer, SIGNAL(newConnection()), this, SLOT(sendWelcome()));
+    //connect(sslserver,SIGNAL()
     //connect(sslServer, SIGNAL(newConnection()), this, SLOT(processMess()));
 }
 
@@ -42,45 +41,67 @@ void server::displayStartUpInfo()
 
 void server::sendWelcome()
 {
+    qDebug() << "Creating welcome message...";
+
     QByteArray block;
-    QDataStream out(&block, QIODevice::WriteOnly);
+    /*QDataStream out(&block, QIODevice::ReadWrite); //WriteOnly);
     out.setVersion(QDataStream::Qt_4_0);
-    qDebug() << "Sending welcome message...";
+
+    QString message = "Welcome to the server!";
     out << (quint16)0;
-    out << "Welcome to the server!";
+    out << message;
     out.device()->seek(0);
-    out << (quint16)(block.size() - sizeof(quint16));
+    out << (quint16)(block.size() - sizeof(quint16));*/
+
+    QString message = "Welcome to the server!";
+    block.append(message.toAscii());
+
+    qDebug() << "About to send welcome message: " + QString(block);
 
     QSslSocket *clientConnection = sslServer->nextPendingConnection();
+    //tempSocket = clientConnection;
+
     if (!clientConnection->waitForEncrypted(1000)){
-        qDebug() << "Waited for 1 second for encryption handshake without success";
+        qDebug() << "Waited for 1 second for encryption handshake with client without success";
+        updateServer("Waited for 1 second for encryption handshake with client without success");
         return;
     }
-    qDebug() << "Successfully waited for secure handshake...";
-    connect(clientConnection, SIGNAL(disconnected()),
-            clientConnection, SLOT(deleteLater()));
+
+    qDebug() << "Successfully waited for secure handshake with the client...";
+    updateServer("Successfully waited for secure handshake with the client...");
+
+    //connect(clientConnection,SIGNAL(readyRead()),this,processMess());
+    connect(clientConnection, SIGNAL(disconnected()),clientConnection, SLOT(deleteLater()));
+
     clientConnection->write(block);
-    clientConnection->disconnectFromHost();
+    //maybe maybe not?
+    //clientConnection->disconnectFromHost();
+
+    //add client connection to its own thread****
+    myClientSockets.push_back(clientConnection);
+
+    //temporary call of processmess
+    //processMess();
 }
 
 void server::processMess()
 {
-    /*
-    //recieve the message
-    QDataStream in(secureSocket);
-    in.setVersion(QDataStream::Qt_4_0);
+    /*QSslSocket* thisConnection = myClientSockets.pop_back();
 
-    if (blockSize == 0) {
-       if (secureSocket->bytesAvailable() < (int)sizeof(quint16))
-           return;
-       in >> blockSize;
-    }
+    QByteArray incoming = thisConnection->readAll();
 
-    if (secureSocket->bytesAvailable() < blockSize)
-       return;
+    QString message = QString(incoming);
 
-    QString receivedMess;
-    in >> receivedMess;
+    qDebug() << "Message received from client: " + message;
+
+    return;*/
+
+    /*QByteArray in = tempSocket->readAll();
+
+    QString message = QString(in);
+
+    qDebug() << "Messaged received from client: " + message;
+    updateServer(message);
 */
    //Break down the received message and do something
 

@@ -23,13 +23,16 @@ clientWid3::~clientWid3()
 void clientWid3::setName(QString friendName)
 {
     toName = friendName;
-    //set window name to friendName
-    this->setWindowTitle(toName);
+    this->setWindowTitle("Chat with " + toName);
 }
 
 void clientWid3::sendMessage()
 {
-    emit send(ui->messageLine->text(), toName);
+    if(!(ui->messageLine->text() == ""))
+    {
+        emit send(ui->messageLine->text(), toName);
+        ui->messageLine->clear();
+    }
 }
 
 void clientWid3::update(QString line)

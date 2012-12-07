@@ -38,7 +38,7 @@ void controller::attemptConnect()
 
      if(success){
          emit clientMade();
-         wid2->setWindowTitle(wid1->getName());
+         wid2->setWindowTitle("Friend list for " + wid1->getName());
      }
 
      //ACTUALLY DO THIS IN CLIENT WITH  #include <QMessageBox>

@@ -31,30 +31,34 @@ bool client::initialize(QString ip, QString port, QString name)
         ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
     }*/
 
+    hostName = ip;
+    portNum = port.toInt();
+    myName = name;
+
     secureSocket->abort();
     secureSocket->setPeerVerifyMode(QSslSocket::QueryPeer);
-    secureSocket->connectToHostEncrypted(ip, port.toInt());
+    secureSocket->connectToHostEncrypted(hostName, portNum);
     if (!secureSocket->waitForEncrypted(1000)) {
-         qDebug() << "Waited for 1 second for encryption handshake without success";
+         qDebug() << "Waited for 1 second for encryption handshake with server without success";
          //QMessageBox::critical(this, "ERROR", "ERROR: Could not connect to host");
          return false;
     }
 
-    qDebug() << "Successfully waited for secure handshake...";
+    qDebug() << "Successfully waited for secure handshake with server...";
+
+    qDebug() << "Creating first message from: " + name;
 
     QByteArray block;
-    QDataStream out(&block, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_4_0);
-    qDebug() << "Creating first message";
-    out << (quint16)0;
-    out << name;
-    out.device()->seek(0);
-    out << (quint16)(block.size() - sizeof(quint16));
 
-    qDebug() << "Successfully waited for secure handshake...";
+    block.append(name.toAscii());
+
+    qDebug() << "Created QByteArray to send to server: " + QString(block);
+
     //connect(clientConnection, SIGNAL(disconnected()),clientConnection, SLOT(deleteLater()));
+
     secureSocket->write(block);
-    secureSocket->disconnectFromHost();
+    //maybe keep connection open
+    //secureSocket->disconnectFromHost();
 
     //****I think this belongs on the server side***/
     //this belongs on this side. if it was on server side then client would
@@ -90,34 +94,44 @@ void client::sendMessage(QString message, QString toName)
     secureSocket->abort();
     secureSocket->setPeerVerifyMode(QSslSocket::QueryPeer);
     secureSocket->connectToHostEncrypted(hostName, portNum);
-    //no hostLineEdit or portLineEdit
-
     if (!secureSocket->waitForEncrypted(1000)) {
+         qDebug() << "Waited for 1 second for encryption handshake with server without success";
          //QMessageBox::critical(this, "ERROR", "ERROR: Could not connect to host");
          return;
     }
+
+    qDebug() << "Successfully waited for secure handshake with server...";
+
+    qDebug() << "Creating first message from: " + myName + " *** " + toName + " *** " + message;
+
+    QByteArray block;
+
+    block.append(myName.toAscii() + " *** " + toName.toAscii() + " *** " + message.toAscii());
+
+    qDebug() << "Created QByteArray to send to server: " + QString(block);
+
+    //connect(clientConnection, SIGNAL(disconnected()),clientConnection, SLOT(deleteLater()));
+
+    secureSocket->write(block);
+    //maybe keep connection open
+    //secureSocket->disconnectFromHost();
 }
 
 void client::receiveMess()
 {
-    qDebug() << "receiving message method";
+    qDebug() << "Receiving message method";
 
-    QDataStream in(secureSocket);
-    in.setVersion(QDataStream::Qt_4_0);
+    QByteArray in = secureSocket->readAll();
 
-    if (blockSize == 0) {
-        if (secureSocket->bytesAvailable() < (int)sizeof(quint16))
-            return;
-        in >> blockSize;
-    }
+    QString message = QString(in);
 
-    if (secureSocket->bytesAvailable() < blockSize)
-        return;
+    qDebug() << "*************Message from server:************** " << message;
 
-    QString message;
-    in >> message;
+    //if(message == "Welcome to the server!")
+    //    return;
 
-    qDebug() << "message from server: " << message;
+    //clientWid3 thisWindow = myFriends.pop_back();
+    //thisWindow->update(message);
 
     //update the correct client window
     //myfriends....myWid3->update(message);

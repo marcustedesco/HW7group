@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QtNetwork>
+#include <QList>
+#include <QThread>
 #include "SSLServer.h"
 
 class server : public QObject
@@ -24,6 +26,7 @@ private:
     SSLServer *sslServer;
     QList<QString> clientList;
     QString myIP;
+    QList<QSslSocket*> myClientSockets;
 
 signals:
     void updateServer(QString);

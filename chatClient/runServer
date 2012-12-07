@@ -1,0 +1,4 @@
+#!/bin/sh -f
+echo "Starting up the server program..."
+make
+../chatServer/chatServer &
