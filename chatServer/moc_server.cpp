@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'server.h'
 **
-** Created: Thu Dec 6 21:45:40 2012
+** Created: Fri Dec 7 12:08:32 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -35,16 +35,16 @@ static const uint qt_meta_data_server[] = {
 
  // slots: signature, parameters, type, tag, flags
       30,    7,    7,    7, 0x0a,
-      51,    7,    7,    7, 0x0a,
-      65,    7,    7,    7, 0x08,
+      59,   51,    7,    7, 0x0a,
+      80,    7,    7,    7, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_server[] = {
     "server\0\0updateServer(QString)\0"
-    "displayStartUpInfo()\0processMess()\0"
-    "sendWelcome()\0"
+    "displayStartUpInfo()\0message\0"
+    "processMess(QString)\0sendWelcome()\0"
 };
 
 void server::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -55,7 +55,7 @@ void server::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         switch (_id) {
         case 0: _t->updateServer((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 1: _t->displayStartUpInfo(); break;
-        case 2: _t->processMess(); break;
+        case 2: _t->processMess((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 3: _t->sendWelcome(); break;
         default: ;
         }

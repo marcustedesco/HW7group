@@ -58,7 +58,7 @@ void server::sendWelcome()
 
     qDebug() << "About to send welcome message: " + QString(block);
 
-    QSslSocket *clientConnection = sslServer->nextPendingConnection();
+    QSslSocket* clientConnection = sslServer->nextPendingConnection();
     //tempSocket = clientConnection;
 
     if (!clientConnection->waitForEncrypted(1000)){
@@ -74,6 +74,21 @@ void server::sendWelcome()
     connect(clientConnection, SIGNAL(disconnected()),clientConnection, SLOT(deleteLater()));
 
     clientConnection->write(block);
+
+    //waits for message for ten seconds... this can be changed
+    if(clientConnection->waitForReadyRead(10000))
+    {
+        QByteArray in = clientConnection->readAll();
+
+        QString clientMess = QString(in);
+
+        processMess(clientMess);
+        //qDebug() << "*************Message from client:************** " << clientMess;
+    }
+
+
+
+
     //maybe maybe not?
     //clientConnection->disconnectFromHost();
 
@@ -84,8 +99,12 @@ void server::sendWelcome()
     //processMess();
 }
 
-void server::processMess()
+void server::processMess(QString message)
 {
+
+    qDebug() << "Messaged received from client: " + message;
+    updateServer("Messaged received from client: " + message);
+
     /*QSslSocket* thisConnection = myClientSockets.pop_back();
 
     QByteArray incoming = thisConnection->readAll();

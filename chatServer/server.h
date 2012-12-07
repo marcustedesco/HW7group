@@ -17,7 +17,7 @@ signals:
     
 public slots:
     void displayStartUpInfo();
-    void processMess();
+    void processMess(QString message);
 
 private slots:
     void sendWelcome();
