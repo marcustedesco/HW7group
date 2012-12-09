@@ -11,10 +11,12 @@ INCLUDEPATH += .
 HEADERS += serverWid.h \
     server.h \
     SSLServer.h \
-    controller.h
+    controller.h \
+    clientthread.h
 FORMS += serverWid.ui
 SOURCES += main.cpp serverWid.cpp \
     server.cpp \
     SSLServer.cpp \
-    controller.cpp
+    controller.cpp \
+    clientthread.cpp
 QT += network

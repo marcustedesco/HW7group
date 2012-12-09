@@ -49,7 +49,7 @@ bool client::initialize(QString ip, QString port, QString name)
 
     secureSocket->write(block);
 
-    if(secureSocket->waitForReadyRead(10000))
+    if(secureSocket->waitForReadyRead(1000))
     {
         QByteArray in = secureSocket->readAll();
 
@@ -58,6 +58,7 @@ bool client::initialize(QString ip, QString port, QString name)
         {
             returnVal = true;
             qDebug() << "added to server";
+            connect(secureSocket, SIGNAL(readyRead()), this, SLOT(receiveMess()));
         }
         else if(QString::compare(serverMess, "Enameinvalid", Qt::CaseSensitive) == 0)
         {

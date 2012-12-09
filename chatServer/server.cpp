@@ -1,5 +1,5 @@
 #include "server.h"
-
+#include <QWaitCondition>
 server::server(QObject *parent) :
     QObject(parent)
 {
@@ -73,7 +73,8 @@ void server::sendWelcome()
 
     connect(clientConnection, SIGNAL(disconnected()),clientConnection, SLOT(deleteLater()));
     myClientSockets.push_back(clientConnection);
-  //  clientConnection->write(block);
+
+   //  clientConnection->write(block);
 
     //waits for message for ten seconds... this can be changed
     if(clientConnection->waitForReadyRead(10000))
@@ -105,6 +106,7 @@ void server::processMess(QString message)
     // number = 3, disconnecting from server, resy is name
 
 
+    bool successfullyConnected = false;
     QStringList temp = message.split("***");
     int num = temp.at(0).toInt();
 
@@ -130,12 +132,19 @@ void server::processMess(QString message)
             clientList.append(name);
             QByteArray block;
             block.append("Snameadded");
+            successfullyConnected = true;
 
 
             QSslSocket *clientConnection = myClientSockets.at(myClientSockets.size() - 1);
-            qDebug() << "Message created to send back to client: " << "Snameadded";
+            qDebug() << "Message created to send back to client: " << QString(block);
             clientConnection->write(block);
 
+           /*
+            ClientThread *thisClientThread = new ClientThread();
+            thisClientThread->setClientConnection(clientConnection);
+            myClientThreads.push_back(thisClientThread);
+            connect(thisClientThread, SIGNAL(messageReceived(QString)), this, SLOT(processMess(QString)));
+            thisClientThread->start();*/
 
         }
     }
@@ -160,6 +169,27 @@ void server::processMess(QString message)
     else
     {
         qDebug() << "Should never reach here";
+    }
+
+    if(successfullyConnected)
+    {
+        //for some reason this is being sent along with the response of whether client connect successfully or not,
+        // need to wait then send this.
+        QByteArray block;
+        block.append("UsersOnServer:");
+        for(int i = 0; i < clientList.size(); ++i)
+        {
+            block.append(clientList.at(i));
+            if(i < clientList.size() - 1)
+            {
+                block.append("***");
+            }
+        }
+        for(int i = 0; i < myClientSockets.size(); ++i)
+        {
+            QSslSocket *receiverConnection = myClientSockets.at(i);
+            receiverConnection->write(block);
+        }
     }
 
     qDebug() << "Messaged received from client: " + message;

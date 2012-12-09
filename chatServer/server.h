@@ -6,6 +6,7 @@
 #include <QList>
 #include <QThread>
 #include "SSLServer.h"
+#include "clientthread.h"
 
 class server : public QObject
 {
@@ -22,11 +23,13 @@ public slots:
 private slots:
     void sendWelcome();
 
+
 private:
     SSLServer *sslServer;
     QList<QString> clientList;
     QString myIP;
     QList<QSslSocket*> myClientSockets;
+    QList<ClientThread*> myClientThreads;
 
 signals:
     void updateServer(QString);
