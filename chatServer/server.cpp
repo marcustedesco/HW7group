@@ -106,7 +106,7 @@ void server::processMess(QString message)
     // number = 3, disconnecting from server, resy is name
 
 
-    bool successfullyConnected = false;
+    bool successfullyConnected = true;
     QStringList temp = message.split("***");
     int num = temp.at(0).toInt();
 
@@ -118,6 +118,7 @@ void server::processMess(QString message)
         QString name = temp.at(1);
         if(clientList.contains(name))
         {
+            successfullyConnected = false;
             QByteArray block;
             block.append("Enameinvalid");
 
@@ -170,8 +171,10 @@ void server::processMess(QString message)
     {
         qDebug() << "Should never reach here";
     }
+    qDebug() << "Messaged received from client: " + message;
+    updateServer("Messaged received from client: " + message);
 
-    if(successfullyConnected)
+    if(successfullyConnected && myClientSockets.at(myClientSockets.size()-1)->waitForBytesWritten(3000))
     {
         //for some reason this is being sent along with the response of whether client connect successfully or not,
         // need to wait then send this.
@@ -192,8 +195,6 @@ void server::processMess(QString message)
         }
     }
 
-    qDebug() << "Messaged received from client: " + message;
-    updateServer("Messaged received from client: " + message);
 
 
     /*QSslSocket* thisConnection = myClientSockets.pop_back();

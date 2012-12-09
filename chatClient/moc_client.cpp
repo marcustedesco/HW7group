@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'client.h'
 **
-** Created: Sun Dec 9 17:11:41 2012
+** Created: Sun Dec 9 18:33:01 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
