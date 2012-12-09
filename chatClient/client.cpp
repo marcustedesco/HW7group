@@ -17,6 +17,9 @@ bool client::initialize(QString ip, QString port, QString name)
     portNum = port.toInt();
     myName = name;
 
+    //Tell them we are connecting for first time by adding 1 to front
+   // name = "1***" + name;
+
     secureSocket->abort();
     secureSocket->setPeerVerifyMode(QSslSocket::QueryPeer);
     secureSocket->connectToHostEncrypted(hostName, portNum);
@@ -39,6 +42,15 @@ bool client::initialize(QString ip, QString port, QString name)
     //connect(clientConnection, SIGNAL(disconnected()),clientConnection, SLOT(deleteLater()));
 
     secureSocket->write(block);
+
+    if(secureSocket->waitForReadyRead(10000))
+    {
+        QByteArray in = secureSocket->readAll();
+
+        QString serverMess = QString(in);
+        qDebug() << "*************Message from server:************** " << serverMess;
+    }
+
     //maybe keep connection open
     //secureSocket->disconnectFromHost();
 

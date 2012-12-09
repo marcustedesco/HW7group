@@ -102,6 +102,62 @@ void server::sendWelcome()
 void server::processMess(QString message)
 {
 
+    //Message type legend
+    // [number]*** [name]*** [message]
+    // number = 1, joining server for first time, rest is name
+    // number = 2, split by "***", retrive name, receiving name, and rest is message
+    // number = 3, disconnecting from server, resy is name
+/*
+    QStringList temp = message.split("***");
+    int num = temp.at(0).toInt();
+
+    if(num == 1)
+    {
+        QString name = temp.at(1);
+        if(clientList.contains(name))
+        {
+            QByteArray block;
+
+            block.append("Enameinvalid");
+            myClientSockets.at(myClientSockets.size() - 1)->write(block);
+            //program crashes here for some reason
+
+        }
+        else
+        {
+            clientList.append(name);
+            QByteArray block;
+            block.append("Snameadded");
+
+            myClientSockets.at(myClientSockets.size() - 1)->write(block);
+            //program crashes here for some reason
+
+        }
+    }
+    else if(num == 2)
+    {
+        //Direct message correctly
+        QString receiver = temp.at(2);
+        QSslSocket* receiverConnection = myClientSockets.at(clientList.indexOf(receiver));
+        QByteArray block;
+        block.append(message);
+        receiverConnection->write(block);
+
+    }
+    else if(num == 3)
+    {
+        //Disconnect client
+        updateServer(name + "disconnected");
+        int position = clientList.indexOf(name);
+        clientList.removeAt(position);
+        myClientSockets.removeAt(position);
+    }
+    else
+    {
+        qDebug() << "Should never reach here";
+    }
+*/
+
     qDebug() << "Messaged received from client: " + message;
     updateServer("Messaged received from client: " + message);
 
@@ -122,7 +178,6 @@ void server::processMess(QString message)
     qDebug() << "Messaged received from client: " + message;
     updateServer(message);
 */
-   //Break down the received message and do something
 
 
 }

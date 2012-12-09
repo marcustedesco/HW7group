@@ -40,7 +40,10 @@ void controller::attemptConnect()
          emit clientMade();
          wid2->setWindowTitle("Friend list for " + wid1->getName());
      }
+     else
+     {
 
+     }
      //ACTUALLY DO THIS IN CLIENT WITH  #include <QMessageBox>
      //if not successful client should display error dialog box?
      //or the error dialog should be made in here if the initialize
