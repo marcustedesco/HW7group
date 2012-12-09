@@ -2,6 +2,7 @@
 //HW7 Group Project
 //ECE 3574
 //Due: Dec. 9, 2012
+//clientWid2.cpp
 
 #include "clientWid2.h"
 #include "ui_clientWid2.h"

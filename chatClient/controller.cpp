@@ -2,6 +2,7 @@
 //HW7 Group Project
 //ECE 3574
 //Due: Dec. 9, 2012
+//controller.cpp
 
 #include "controller.h"
 
@@ -37,11 +38,16 @@ void controller::attemptConnect()
      bool success = myClient->initialize(myIP, myPort, myName);
 
      if(success){
+         qDebug() << "Successfully connected to the server";
          emit clientMade();
          wid2->setWindowTitle("Friend list for " + wid1->getName());
      }
      else
      {
+         qDebug() << "another user exists with same name";
+         QMessageBox msgBox;
+         msgBox.setText("Another User already exists with the same name, choose another name.");
+         msgBox.exec();
 
      }
      //ACTUALLY DO THIS IN CLIENT WITH  #include <QMessageBox>

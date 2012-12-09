@@ -44,6 +44,7 @@ void server::sendWelcome()
     qDebug() << "Creating welcome message...";
 
     QByteArray block;
+
     /*QDataStream out(&block, QIODevice::ReadWrite); //WriteOnly);
     out.setVersion(QDataStream::Qt_4_0);
 
@@ -70,10 +71,9 @@ void server::sendWelcome()
     qDebug() << "Successfully waited for secure handshake with the client...";
     updateServer("Successfully waited for secure handshake with the client...");
 
-    //connect(clientConnection,SIGNAL(readyRead()),this,processMess());
     connect(clientConnection, SIGNAL(disconnected()),clientConnection, SLOT(deleteLater()));
-
-    clientConnection->write(block);
+    myClientSockets.push_back(clientConnection);
+  //  clientConnection->write(block);
 
     //waits for message for ten seconds... this can be changed
     if(clientConnection->waitForReadyRead(10000))
@@ -83,7 +83,6 @@ void server::sendWelcome()
         QString clientMess = QString(in);
 
         processMess(clientMess);
-        //qDebug() << "*************Message from client:************** " << clientMess;
     }
 
 
@@ -93,10 +92,7 @@ void server::sendWelcome()
     //clientConnection->disconnectFromHost();
 
     //add client connection to its own thread****
-    myClientSockets.push_back(clientConnection);
 
-    //temporary call of processmess
-    //processMess();
 }
 
 void server::processMess(QString message)
@@ -107,20 +103,26 @@ void server::processMess(QString message)
     // number = 1, joining server for first time, rest is name
     // number = 2, split by "***", retrive name, receiving name, and rest is message
     // number = 3, disconnecting from server, resy is name
-/*
+
+
     QStringList temp = message.split("***");
     int num = temp.at(0).toInt();
 
+    qDebug() << num;
+    qDebug() << "size of socket list:" << myClientSockets.size();
+    QString name = temp.at(1);
     if(num == 1)
     {
         QString name = temp.at(1);
         if(clientList.contains(name))
         {
             QByteArray block;
-
             block.append("Enameinvalid");
-            myClientSockets.at(myClientSockets.size() - 1)->write(block);
-            //program crashes here for some reason
+
+            QSslSocket *clientConnection = myClientSockets.at(myClientSockets.size() - 1);
+            myClientSockets.pop_back();
+            clientConnection->write(block);
+            \
 
         }
         else
@@ -129,8 +131,11 @@ void server::processMess(QString message)
             QByteArray block;
             block.append("Snameadded");
 
-            myClientSockets.at(myClientSockets.size() - 1)->write(block);
-            //program crashes here for some reason
+
+            QSslSocket *clientConnection = myClientSockets.at(myClientSockets.size() - 1);
+            qDebug() << "Message created to send back to client: " << "Snameadded";
+            clientConnection->write(block);
+
 
         }
     }
@@ -156,10 +161,10 @@ void server::processMess(QString message)
     {
         qDebug() << "Should never reach here";
     }
-*/
 
     qDebug() << "Messaged received from client: " + message;
     updateServer("Messaged received from client: " + message);
+
 
     /*QSslSocket* thisConnection = myClientSockets.pop_back();
 

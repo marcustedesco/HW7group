@@ -2,6 +2,7 @@
 //HW7 Group Project
 //ECE 3574
 //Due: Dec. 9, 2012
+//serverWid.cpp
 
 #include "serverWid.h"
 #include "ui_serverWid.h"

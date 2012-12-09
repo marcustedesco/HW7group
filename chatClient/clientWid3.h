@@ -2,6 +2,7 @@
 //HW7 Group Project
 //ECE 3574
 //Due: Dec. 9, 2012
+//clientWid3.h
 
 #ifndef CLIENTWID3_H
 #define CLIENTWID3_H

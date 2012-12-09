@@ -1,3 +1,9 @@
+//Marcus Tedesco and Amre Kebaish
+//HW7 Group Project
+//ECE 3574
+//Due: Dec. 9, 2012
+//client.cpp
+
 #include "client.h"
 
 client::client(QObject *parent) :
@@ -5,7 +11,7 @@ client::client(QObject *parent) :
 {
     secureSocket = new QSslSocket(this);
 
-    connect(secureSocket, SIGNAL(readyRead()), this, SLOT(receiveMess()));
+   // connect(secureSocket, SIGNAL(readyRead()), this, SLOT(receiveMess()));
 }
 
 bool client::initialize(QString ip, QString port, QString name)
@@ -17,8 +23,8 @@ bool client::initialize(QString ip, QString port, QString name)
     portNum = port.toInt();
     myName = name;
 
-    //Tell them we are connecting for first time by adding 1 to front
-   // name = "1***" + name;
+    bool returnVal = false;
+
 
     secureSocket->abort();
     secureSocket->setPeerVerifyMode(QSslSocket::QueryPeer);
@@ -35,7 +41,7 @@ bool client::initialize(QString ip, QString port, QString name)
 
     QByteArray block;
 
-    block.append(name.toAscii());
+    block.append("1***" + name.toAscii());
 
     qDebug() << "Created QByteArray to send to server: " + QString(block);
 
@@ -48,7 +54,17 @@ bool client::initialize(QString ip, QString port, QString name)
         QByteArray in = secureSocket->readAll();
 
         QString serverMess = QString(in);
-        qDebug() << "*************Message from server:************** " << serverMess;
+        if(QString::compare(serverMess, "Snameadded", Qt::CaseSensitive) == 0)
+        {
+            returnVal = true;
+            qDebug() << "added to server";
+        }
+        else if(QString::compare(serverMess, "Enameinvalid", Qt::CaseSensitive) == 0)
+        {
+            returnVal = false;
+            qDebug() << "username already taken";
+        }
+        qDebug() << "*************Message from server:************** 1" << serverMess;
     }
 
     //maybe keep connection open
@@ -62,7 +78,7 @@ bool client::initialize(QString ip, QString port, QString name)
                           tr("Unable to start the server: %1.")
                           .arg(sslServer->errorString()));*/
 
-    return true;
+    return returnVal;
 }
 
 void client::connectTo(QString clientName)
@@ -119,7 +135,7 @@ void client::receiveMess()
 
     QString message = QString(in);
 
-    qDebug() << "*************Message from server:************** " << message;
+    qDebug() << "*************Message from server:************** 2" << message;
 
     //if(message == "Welcome to the server!")
     //    return;
