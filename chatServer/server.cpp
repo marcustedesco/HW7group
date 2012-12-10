@@ -157,6 +157,7 @@ void server::processMess(QString message)
         QByteArray block;
         block.append(message);
         receiverConnection->write(block);
+        successfullyConnected = false;
 
     }
     else if(num == 3)

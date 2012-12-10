@@ -35,6 +35,8 @@ private:
     quint16 blockSize;
     QString hostName;
     int portNum;
+signals:
+    void updateUsers(QString users);
 };
 
 #endif // CLIENT_H

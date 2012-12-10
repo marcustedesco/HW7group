@@ -8,6 +8,7 @@
 #define CLIENTWID2_H
 
 #include <QWidget>
+#include<QDebug>
 
 namespace Ui {
 class clientWid2;
@@ -26,6 +27,7 @@ private:
 
 private slots:
     void sendButtonPushed();
+    void updateFriends(QString friends);
 
 signals:
     void buttonPushed(QString);

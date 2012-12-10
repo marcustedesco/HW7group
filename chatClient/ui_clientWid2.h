@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'clientWid2.ui'
 **
-** Created: Sun Dec 9 18:32:53 2012
+** Created: Sun Dec 9 20:07:31 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -55,10 +55,9 @@ public:
     void retranslateUi(QWidget *clientWid2)
     {
         clientWid2->setWindowTitle(QApplication::translate("clientWid2", "Form", 0, QApplication::UnicodeUTF8));
-        clientListBox->clear();
-        clientListBox->insertItems(0, QStringList()
-         << QApplication::translate("clientWid2", "Client List", 0, QApplication::UnicodeUTF8)
-        );
+#ifndef QT_NO_ACCESSIBILITY
+        clientListBox->setAccessibleName(QString());
+#endif // QT_NO_ACCESSIBILITY
         connectButton->setText(QApplication::translate("clientWid2", "Connect", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

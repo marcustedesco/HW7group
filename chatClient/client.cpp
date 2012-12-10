@@ -125,7 +125,7 @@ void client::sendMessage(QString message, QString toName)
 
     secureSocket->write(block);
     //maybe keep connection open
-    secureSocket->disconnectFromHost();
+    //secureSocket->disconnectFromHost();
 }
 
 void client::receiveMess()
@@ -137,6 +137,15 @@ void client::receiveMess()
     QString message = QString(in);
 
     qDebug() << "*************Message from server:************** 2" << message;
+
+    QStringList tempList = message.split(":");
+    qDebug() << tempList.at(0);
+    if(QString::compare(tempList.at(0), "UsersOnServer", Qt::CaseSensitive) == 0)
+    {
+        qDebug() << "correct";
+        emit updateUsers(tempList.at(1));
+        qDebug() << "Users signal emitted";
+    }
 
     //if(message == "Welcome to the server!")
     //    return;

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'clientWid2.h'
 **
-** Created: Sun Dec 9 18:33:03 2012
+** Created: Sun Dec 9 20:03:30 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_clientWid2[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -35,13 +35,15 @@ static const uint qt_meta_data_clientWid2[] = {
 
  // slots: signature, parameters, type, tag, flags
       34,   11,   11,   11, 0x08,
+      61,   53,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_clientWid2[] = {
     "clientWid2\0\0buttonPushed(QString)\0"
-    "sendButtonPushed()\0"
+    "sendButtonPushed()\0friends\0"
+    "updateFriends(QString)\0"
 };
 
 void clientWid2::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -52,6 +54,7 @@ void clientWid2::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->buttonPushed((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 1: _t->sendButtonPushed(); break;
+        case 2: _t->updateFriends((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -89,9 +92,9 @@ int clientWid2::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

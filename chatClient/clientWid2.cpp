@@ -13,6 +13,7 @@ clientWid2::clientWid2(QWidget *parent) :
 {
     ui->setupUi(this);
 
+
     connect(ui->connectButton,SIGNAL(pressed()),this, SLOT(sendButtonPushed()));
 }
 
@@ -24,4 +25,23 @@ clientWid2::~clientWid2()
 void clientWid2::sendButtonPushed()
 {
     emit buttonPushed(ui->clientListBox->itemText(ui->clientListBox->currentIndex()));
+}
+
+void clientWid2::updateFriends(QString friends)
+{
+    QStringList users = friends.split("***");
+    qDebug() << users.size();
+
+    for(int i = 0; i < (ui->clientListBox->count()); ++i)
+    {
+        ui->clientListBox->removeItem(i);
+    }
+
+    for(int i = 0; i < users.size(); ++i)
+    {
+        qDebug() << users.at(i);
+
+        ui->clientListBox->addItem(users.at(i));
+
+    }
 }

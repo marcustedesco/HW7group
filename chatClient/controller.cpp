@@ -22,7 +22,6 @@ void controller::init()
     //if the client connected to the server successfully then close window 1 and open 2
     connect(this,SIGNAL(clientMade()),wid2,SLOT(show()));
     connect(this,SIGNAL(clientMade()),wid1,SLOT(close()));
-
     connect(wid2,SIGNAL(buttonPushed(QString)),this,SLOT(connectToClient(QString)));
 
     wid1->show();
@@ -41,6 +40,7 @@ void controller::attemptConnect()
          qDebug() << "Successfully connected to the server";
          emit clientMade();
          wid2->setWindowTitle("Friend list for " + wid1->getName());
+         connect(myClient, SIGNAL(updateUsers(QString)), wid2, SLOT(updateFriends(QString)));
      }
      else
      {
