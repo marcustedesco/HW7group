@@ -88,6 +88,8 @@ void client::connectTo(QString clientName)
     clientWid3* myWid3 = new clientWid3();
 
     myWid3->setName(clientName);
+    qDebug() << "Client Name: " + clientName;
+    myWid3->setMyName(myName);
 
     connect(myWid3,SIGNAL(send(QString,QString)),this,SLOT(sendMessage(QString,QString)));
 
@@ -138,16 +140,60 @@ void client::receiveMess()
 
     qDebug() << "*************Message from server:************** 2" << message;
 
-    QStringList tempList = message.split(":");
-    qDebug() << tempList.at(0);
-    if(QString::compare(tempList.at(0), "UsersOnServer", Qt::CaseSensitive) == 0)
+    if(message.contains(":"))
     {
-        qDebug() << "correct";
-        emit updateUsers(tempList.at(1));
-        qDebug() << "Users signal emitted";
+        QStringList tempList = message.split(":");
+        qDebug() << tempList.at(0);
+        if(QString::compare(tempList.at(0), "UsersOnServer", Qt::CaseSensitive) == 0)
+        {
+            qDebug() << "correct";
+            emit updateUsers(tempList.at(1));
+            qDebug() << "Users signal emitted";
+        }
     }
 
-    QStringList tempList = message.split("***");
+    QStringList tempList2 = message.split("***");
+    QString sender;
+    if(QString::compare(tempList2.at(0), "2", Qt::CaseSensitive) == 0)
+    {
+        sender = tempList2.at(1);
+        qDebug() << "sender: " +  sender;
+        bool openWind = false;
+        clientWid3* senderWid;
+        for(int i = 0; i < myFriends.size(); ++i)
+        {
+            qDebug() << "friends name:"+  myFriends.at(i)->getName();
+            if(QString::compare(myFriends.at(i)->getName(), sender, Qt::CaseSensitive) == 0)
+            {
+                openWind = true;
+                senderWid = myFriends.at(i);
+                qDebug() << "Window already open";
+
+                break;
+            }
+
+        }
+        if(openWind)
+        {
+            senderWid->update(tempList2.at(1)+ "> "+ tempList2.at(3));
+        }
+        else
+        {
+            qDebug() << "Window Not open";
+            clientWid3* myWid3 = new clientWid3();
+
+            myWid3->setName(sender);
+            myWid3->setMyName(myName);
+
+            connect(myWid3,SIGNAL(send(QString,QString)),this,SLOT(sendMessage(QString,QString)));
+
+            myWid3->show();
+
+            myFriends.push_back(myWid3);
+            myWid3->update(tempList2.at(1)+ "> "+ tempList2.at(3));
+        }
+    }
+
 
 
     //if(message == "Welcome to the server!")

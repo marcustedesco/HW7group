@@ -105,7 +105,7 @@ void server::processMess(QString message)
     // number = 2, split by "***", retrive name, receiving name, and rest is message
     // number = 3, disconnecting from server, resy is name
 
-
+    mutex.lock();
     bool successfullyConnected = true;
     QStringList temp = message.split("***");
     int num = temp.at(0).toInt();
@@ -125,7 +125,6 @@ void server::processMess(QString message)
             QSslSocket *clientConnection = myClientSockets.at(myClientSockets.size() - 1);
             myClientSockets.pop_back();
             clientConnection->write(block);
-            \
 
         }
         else
@@ -154,11 +153,17 @@ void server::processMess(QString message)
         //Direct message correctly
         QString receiver = temp.at(2);
         QSslSocket* receiverConnection = myClientSockets.at(clientList.indexOf(receiver));
+        //myClientThreads.at(clientList.indexOf(receiver))->wait(2000);
         qDebug() << "receiver Index: " << clientList.indexOf(receiver);
         QByteArray block;
         block.append(message);
         qDebug() << "Created block to send";
         receiverConnection->write(block);
+        if(receiverConnection->waitForBytesWritten(10000))
+        {
+            qDebug() << "sent message to client";
+        }
+
         successfullyConnected = false;
 
     }
@@ -199,7 +204,7 @@ void server::processMess(QString message)
         }
     }
 
-
+    mutex.unlock();
 
     /*QSslSocket* thisConnection = myClientSockets.pop_back();
 

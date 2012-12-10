@@ -22,10 +22,12 @@ public:
     ~clientWid3();
 
     void setName(QString friendName);
-    
+    void setMyName(QString name);
+    QString getName();
 private:
     Ui::clientWid3 *ui;
     QString toName;
+    QString myName;
 
 public slots:
     void update(QString line);

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'clientWid2.h'
 **
-** Created: Sun Dec 9 20:54:51 2012
+** Created: Sun Dec 9 23:00:16 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

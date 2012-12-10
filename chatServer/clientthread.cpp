@@ -14,7 +14,8 @@ void ClientThread::run()
 {
     while(1)
     {
-        if(clientConnection->waitForReadyRead(10000))
+
+        if(clientConnection->waitForReadyRead(1000))
         {
             QByteArray in = clientConnection->readAll();
 

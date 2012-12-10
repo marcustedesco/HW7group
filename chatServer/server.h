@@ -5,6 +5,7 @@
 #include <QtNetwork>
 #include <QList>
 #include <QThread>
+#include<QMutex>
 #include "SSLServer.h"
 #include "clientthread.h"
 
@@ -30,6 +31,7 @@ private:
     QString myIP;
     QList<QSslSocket*> myClientSockets;
     QList<ClientThread*> myClientThreads;
+    QMutex mutex;
 
 signals:
     void updateServer(QString);
