@@ -140,12 +140,12 @@ void server::processMess(QString message)
             qDebug() << "Message created to send back to client: " << QString(block);
             clientConnection->write(block);
 
-           /*
+
             ClientThread *thisClientThread = new ClientThread();
             thisClientThread->setClientConnection(clientConnection);
             myClientThreads.push_back(thisClientThread);
             connect(thisClientThread, SIGNAL(messageReceived(QString)), this, SLOT(processMess(QString)));
-            thisClientThread->start();*/
+            thisClientThread->start();
 
         }
     }
@@ -154,8 +154,10 @@ void server::processMess(QString message)
         //Direct message correctly
         QString receiver = temp.at(2);
         QSslSocket* receiverConnection = myClientSockets.at(clientList.indexOf(receiver));
+        qDebug() << "receiver Index: " << clientList.indexOf(receiver);
         QByteArray block;
         block.append(message);
+        qDebug() << "Created block to send";
         receiverConnection->write(block);
         successfullyConnected = false;
 
@@ -175,24 +177,25 @@ void server::processMess(QString message)
     qDebug() << "Messaged received from client: " + message;
     updateServer("Messaged received from client: " + message);
 
-    if(successfullyConnected && myClientSockets.at(myClientSockets.size()-1)->waitForBytesWritten(3000))
+    if(successfullyConnected)
     {
-        //for some reason this is being sent along with the response of whether client connect successfully or not,
-        // need to wait then send this.
-        QByteArray block;
-        block.append("UsersOnServer:");
-        for(int i = 0; i < clientList.size(); ++i)
+        if(myClientSockets.at(myClientSockets.size()-1)->waitForBytesWritten(3000))
         {
-            block.append(clientList.at(i));
-            if(i < clientList.size() - 1)
+            QByteArray block;
+            block.append("UsersOnServer:");
+            for(int i = 0; i < clientList.size(); ++i)
             {
-                block.append("***");
+                block.append(clientList.at(i));
+                if(i < clientList.size() - 1)
+                {
+                    block.append("***");
+                }
             }
-        }
-        for(int i = 0; i < myClientSockets.size(); ++i)
-        {
-            QSslSocket *receiverConnection = myClientSockets.at(i);
-            receiverConnection->write(block);
+            for(int i = 0; i < myClientSockets.size(); ++i)
+            {
+                QSslSocket *receiverConnection = myClientSockets.at(i);
+                receiverConnection->write(block);
+            }
         }
     }
 

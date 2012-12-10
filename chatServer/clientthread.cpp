@@ -19,6 +19,8 @@ void ClientThread::run()
             QByteArray in = clientConnection->readAll();
 
             QString clientMess = QString(in);
+            qDebug() << "Received on thread: " << clientMess;
+            emit messageReceived(clientMess);
 
         }
     }

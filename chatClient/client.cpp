@@ -102,14 +102,14 @@ void client::sendMessage(QString message, QString toName)
 
     qDebug() << "send: " << message << " to: " << toName;
 
-    secureSocket->abort();
+ /*   secureSocket->abort();
     secureSocket->setPeerVerifyMode(QSslSocket::QueryPeer);
     secureSocket->connectToHostEncrypted(hostName, portNum);
     if (!secureSocket->waitForEncrypted(1000)) {
          qDebug() << "Waited for 1 second for encryption handshake with server without success";
          //QMessageBox::critical(this, "ERROR", "ERROR: Could not connect to host");
          return;
-    }
+    }*/
 
     qDebug() << "Successfully waited for secure handshake with server...";
 
@@ -117,7 +117,7 @@ void client::sendMessage(QString message, QString toName)
 
     QByteArray block;
 
-    block.append(myName.toAscii() + " *** " + toName.toAscii() + " *** " + message.toAscii());
+    block.append("2***" + myName.toAscii() + "***" + toName.toAscii() + "***" + message.toAscii());
 
     qDebug() << "Created QByteArray to send to server: " + QString(block);
 
@@ -146,6 +146,9 @@ void client::receiveMess()
         emit updateUsers(tempList.at(1));
         qDebug() << "Users signal emitted";
     }
+
+    QStringList tempList = message.split("***");
+
 
     //if(message == "Welcome to the server!")
     //    return;
