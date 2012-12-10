@@ -37,7 +37,11 @@ void clientWid3::sendMessage()
     if(!(ui->messageLine->text() == ""))
     {
         emit send(ui->messageLine->text(), toName);
-        ui->messagesBox->append(myName + "> " + ui->messageLine->text());
+        QString colorName = "<html><b><font color=red>";
+        colorName.append(myName);
+        colorName.append("</font></b></html>");
+        colorName.append(">" + ui->messageLine->text());
+        ui->messagesBox->append(colorName);//myName + "> " + ui->messageLine->text());
         ui->messageLine->clear();
 
     }

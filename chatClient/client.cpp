@@ -6,6 +6,19 @@
 
 #include "client.h"
 
+/*
+  changes to make:
+    -if client1 sends message to client2 and a window is not open, open new window
+    -move the quit/disconnect button to the window2 with clientlist because this is
+        where the client should be able to disconnect from the server
+    -disconnecting should update the clientlist combobox on all the clients
+    -disconnecting should close all the conversation windows that client current has open
+    -if the client1 disconnects while talking to client2, it should say client1 disconnected.
+    -maybe add group chat?
+
+    -delimiter needs to be changed! this gets seriously messed up when sent quickly
+*/
+
 client::client(QObject *parent) :
     QObject(parent)
 {
@@ -71,14 +84,6 @@ bool client::initialize(QString ip, QString port, QString name)
     //maybe keep connection open
     //secureSocket->disconnectFromHost();
 
-    //****I think this belongs on the server side***/
-    //this belongs on this side. if it was on server side then client would
-    //not know what the error was. server can also display error in the server
-    //text box if we want
-  /*  QMessageBox::critical(this, tr("Server Connection Error"),
-                          tr("Unable to start the server: %1.")
-                          .arg(sslServer->errorString()));*/
-
     return returnVal;
 }
 
@@ -103,15 +108,6 @@ void client::sendMessage(QString message, QString toName)
     //sends MESSAGE from myClient to TONAME
 
     qDebug() << "send: " << message << " to: " << toName;
-
- /*   secureSocket->abort();
-    secureSocket->setPeerVerifyMode(QSslSocket::QueryPeer);
-    secureSocket->connectToHostEncrypted(hostName, portNum);
-    if (!secureSocket->waitForEncrypted(1000)) {
-         qDebug() << "Waited for 1 second for encryption handshake with server without success";
-         //QMessageBox::critical(this, "ERROR", "ERROR: Could not connect to host");
-         return;
-    }*/
 
     qDebug() << "Successfully waited for secure handshake with server...";
 
@@ -175,7 +171,11 @@ void client::receiveMess()
         }
         if(openWind)
         {
-            senderWid->update(tempList2.at(1)+ "> "+ tempList2.at(3));
+            QString colorName = "<html><b><font color=blue>";
+            colorName.append(tempList2.at(1));
+            colorName.append("</font></b></html>");
+            colorName.append(">" + tempList2.at(3));
+            senderWid->update(colorName);
         }
         else
         {
