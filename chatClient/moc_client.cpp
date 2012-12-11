@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'client.h'
 **
-** Created: Mon Dec 10 18:52:55 2012
+** Created: Tue Dec 11 01:15:07 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_client[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -36,9 +36,10 @@ static const uint qt_meta_data_client[] = {
  // slots: signature, parameters, type, tag, flags
       57,   44,   39,    7, 0x0a,
      104,   93,    7,    7, 0x0a,
-     142,  123,    7,    7, 0x0a,
-     188,  173,    7,    7, 0x08,
-     217,    7,    7,    7, 0x08,
+     123,    7,    7,    7, 0x0a,
+     154,  139,    7,    7, 0x08,
+     183,    7,    7,    7, 0x08,
+     227,  197,    7,    7, 0x08,
 
        0        // eod
 };
@@ -47,9 +48,10 @@ static const char qt_meta_stringdata_client[] = {
     "client\0\0users\0updateUsers(QStringList)\0"
     "bool\0ip,port,name\0initialize(QString,QString,QString)\0"
     "clientName\0connectTo(QString)\0"
-    "mySender,myMessage\0updateChatWid(QString,QString)\0"
-    "message,toName\0sendMessage(QString,QString)\0"
-    "receiveMess()\0"
+    "disconnectNow()\0message,toName\0"
+    "sendMessage(QString,QString)\0receiveMess()\0"
+    "myWindName,mySender,myMessage\0"
+    "updateChatWid(QString,QString,QString)\0"
 };
 
 void client::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -62,9 +64,10 @@ void client::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 1: { bool _r = _t->initialize((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 2: _t->connectTo((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 3: _t->updateChatWid((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 3: _t->disconnectNow(); break;
         case 4: _t->sendMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         case 5: _t->receiveMess(); break;
+        case 6: _t->updateChatWid((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
         default: ;
         }
     }
@@ -102,9 +105,9 @@ int client::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     }
     return _id;
 }

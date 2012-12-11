@@ -85,17 +85,57 @@ bool client::initialize(QString ip, QString port, QString name)
 void client::connectTo(QString clientName)
 {
     //connects this client to the CLIENTNAME
-    clientWid3* myWid3 = new clientWid3();
+    bool foundWind = false;
 
-    myWid3->setMyName(myName);
-    myWid3->setFriendName(clientName);
-    qDebug() << "Client Name: " + clientName;
+    for(int i = 0; i < myFriends.size(); ++i)
+    {
+        if(QString::compare(myFriends.at(i)->getName(), clientName, Qt::CaseSensitive) == 0)
+        {
+            myFriends.at(i)->show();
+            foundWind = true;
+            break;
+        }
+    }
 
-    connect(myWid3,SIGNAL(send(QString,QString)),this,SLOT(sendMessage(QString,QString)));
+    if(!foundWind)
+    {
+        clientWid3* myWid3 = new clientWid3();
 
-    myWid3->show();
+        myWid3->setMyName(myName);
+        myWid3->setFriendName(clientName);
+        qDebug() << "Client Name: " + clientName;
 
-    myFriends.push_back(myWid3);
+        connect(myWid3,SIGNAL(send(QString,QString)),this,SLOT(sendMessage(QString,QString)));
+
+        myWid3->show();
+
+        myFriends.push_back(myWid3);
+
+    }
+}
+
+void client::disconnectNow()
+{
+    clientWid3* temp;
+
+    //while(!(myFriends.isEmpty()))
+    for(int i = 0; i < myFriends.size(); i++)
+    {
+       temp = myFriends.at(i);
+       //temp = myFriends.back();
+       //this is necessary
+       //myFriends.pop_back();
+       temp->close();
+       //temp->destroy();
+    }
+
+    /*QByteArray block;
+
+    block.append("<3>.:." + myName.toAscii());
+
+    secureSocket->write(block);*/
+
+    //secureSocket->disconnectFromHost();
 }
 
 void client::sendMessage(QString message, QString toName)
@@ -106,7 +146,10 @@ void client::sendMessage(QString message, QString toName)
 
     QByteArray block;
 
-    block.append("<2>.:." + myName.toAscii() + ".:." + toName.toAscii() + ".:." + message.toAscii());
+    if(toName == "Group Chat")
+        block.append("<4>.:." + myName.toAscii() + ".:." + message.toAscii());
+    else
+        block.append("<2>.:." + myName.toAscii() + ".:." + toName.toAscii() + ".:." + message.toAscii());
 
     qDebug() << "Created QByteArray to send to server: " + QString(block);
 
@@ -115,14 +158,14 @@ void client::sendMessage(QString message, QString toName)
     secureSocket->write(block);
 }
 
-void client::updateChatWid(QString mySender, QString myMessage)
+void client::updateChatWid(QString myWindName, QString mySender, QString myMessage)
 {
     clientWid3* senderWid;
     bool foundWindow = false;
 
     for(int i = 0; i < myFriends.size(); ++i)
     {
-        if(QString::compare(myFriends.at(i)->getName(), mySender, Qt::CaseSensitive) == 0)
+        if(QString::compare(myFriends.at(i)->getName(), myWindName, Qt::CaseSensitive) == 0)
         {
             senderWid = myFriends.at(i);
             foundWindow = true;
@@ -174,6 +217,8 @@ void client::receiveMess()
             if(QString::compare(myFriends.at(i)->getName(), sender, Qt::CaseSensitive) == 0)
             {
                 openWind = true;
+                if(!(myFriends.at(i)->isVisible()))
+                    myFriends.at(i)->show();
                 qDebug() << "Window already open";
 
                 break;
@@ -186,7 +231,37 @@ void client::receiveMess()
             connectTo(sender);
         }
 
-        updateChatWid(sender, splitMessage.at(2));
+        updateChatWid(sender, sender, splitMessage.at(2));
+    }
+
+    if(splitMessage.at(0) == "<5>")
+    {
+        qDebug() << "receiving a group chat message from server";
+
+        sender = splitMessage.at(1);
+
+        bool openWind = false;
+
+        for(int i = 0; i < myFriends.size(); ++i)
+        {
+            if(QString::compare(myFriends.at(i)->getName(), "Group Chat", Qt::CaseSensitive) == 0)
+            {
+                openWind = true;
+                if(!(myFriends.at(i)->isVisible()))
+                    myFriends.at(i)->show();
+                qDebug() << "Window already open";
+
+                break;
+            }
+
+        }
+        if(!openWind)
+        {
+            qDebug() << "Window Not open";
+            connectTo("Group Chat");
+        }
+        if(sender != myName)
+            updateChatWid("Group Chat", sender, splitMessage.at(2));
     }
 }
 

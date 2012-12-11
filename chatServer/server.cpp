@@ -6,13 +6,6 @@ server::server(QObject *parent) :
     sslServer = new SSLServer(this);
 
     if (!sslServer->listen()) {
-       /* QMessageBox::critical(this, tr("Secure Fortune Server"),
-                              tr("Unable to start the server: %1.")
-                              .arg(sslServer->errorString()));
-        close();
-        return;*/
-
-        // Tell gui to take care of it
     }
 
     QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
@@ -29,8 +22,8 @@ server::server(QObject *parent) :
         myIP = QHostAddress(QHostAddress::LocalHost).toString();
 
     connect(sslServer, SIGNAL(newConnection()), this, SLOT(sendWelcome()));
-    //connect(sslserver,SIGNAL()
-    //connect(sslServer, SIGNAL(newConnection()), this, SLOT(processMess()));
+
+    updateServer("Server has started up.");
 }
 
 void server::displayStartUpInfo()
@@ -41,17 +34,7 @@ void server::displayStartUpInfo()
 
 void server::sendWelcome()
 {
-    qDebug() << "Creating welcome message...";
-
-    QByteArray block;
-
-    QString message = "Welcome to the server!";
-    block.append(message.toAscii());
-
-    qDebug() << "About to send welcome message: " + QString(block);
-
     QSslSocket* clientConnection = sslServer->nextPendingConnection();
-    //tempSocket = clientConnection;
 
     if (!clientConnection->waitForEncrypted(1000)){
         qDebug() << "Waited for 1 second for encryption handshake with client without success";
@@ -60,12 +43,10 @@ void server::sendWelcome()
     }
 
     qDebug() << "Successfully waited for secure handshake with the client...";
-    updateServer("Successfully waited for secure handshake with the client...");
+    //updateServer("Successfully waited for secure handshake with the client...");
 
     connect(clientConnection, SIGNAL(disconnected()),clientConnection, SLOT(deleteLater()));
     myClientSockets.push_back(clientConnection);
-
-   //  clientConnection->write(block);
 
     //waits for message for ten seconds... this can be changed
     //changed to one second
@@ -89,7 +70,7 @@ void server::processMess(QString message)
     // number = 3, disconnecting from server, rest is name
 
     mutex.lock();
-    bool successfullyConnected = true;
+    bool usersChanged = true;
     QStringList temp = message.split(".:.");
     QString numStr = temp.at(0);
 
@@ -101,7 +82,7 @@ void server::processMess(QString message)
         //if client name is already taken then return <2> meaning not added to server
         if(clientList.contains(name))
         {
-            successfullyConnected = false;
+            usersChanged = false;
             QByteArray block;
             block.append("<2>");
 
@@ -117,7 +98,7 @@ void server::processMess(QString message)
             clientList.append(name);
             QByteArray block;
             block.append("<1>");
-            successfullyConnected = true;
+            usersChanged = true;
 
             QSslSocket *clientConnection = myClientSockets.at(myClientSockets.size() - 1);
             qDebug() << "Message created to send back to client: " << QString(block);
@@ -154,23 +135,50 @@ void server::processMess(QString message)
             qDebug() << "sent message to client";
         }
 
-        successfullyConnected = false;
+        usersChanged = false;
 
         updateServer(temp.at(1) + ">" + receiver + ": " + temp.at(3));
     }
     else if(numStr == "<3>")
     {
         //Disconnect client
-        updateServer(name + "disconnected");
-        int position = clientList.indexOf(name);
+        updateServer(name + " disconnected.");
+        /*int position = clientList.indexOf(name);
         clientList.removeAt(position);
         myClientSockets.removeAt(position);
         ClientThread *thisClientThread = myClientThreads.at(position);
         thisClientThread->terminate();
-        myClientThreads.removeAt(position);
+        myClientThreads.removeAt(position);*/
 
-        successfullyConnected = true;
+        usersChanged = true;
     }
+    else if(numStr == "<4>")
+    {
+        QSslSocket* receiverConnection;
+
+        for(int i = 0; i < myClientSockets.size(); i++)
+        {
+            receiverConnection = myClientSockets.at(i);
+
+            QByteArray block;
+
+            QString newMessage = "<5>.:." + name + ".:." + temp.at(2);
+
+            block.append(newMessage);
+
+            receiverConnection->write(block);
+
+            if(receiverConnection->waitForBytesWritten(10000))
+            {
+                qDebug() << "sent message to client";
+            }
+        }
+
+        usersChanged = false;
+
+        updateServer(temp.at(1) + ">Group chat: " + temp.at(2));
+    }
+
     else
     {
         qDebug() << "Should never reach here";
@@ -178,7 +186,7 @@ void server::processMess(QString message)
     qDebug() << "Messaged received from client: " + message;
     //updateServer("Messaged received from client: " + message);
 
-    if(successfullyConnected)
+    if(usersChanged)
     {
         if(myClientSockets.at(myClientSockets.size()-1)->waitForBytesWritten(3000))
         {
@@ -186,6 +194,7 @@ void server::processMess(QString message)
             block.append("<3>.:.");
             for(int i = 0; i < clientList.size(); ++i)
             {
+                qDebug() << "client " << i << " in list: " << clientList.at(i);
                 block.append(clientList.at(i));
                 if(i < clientList.size() - 1)
                 {

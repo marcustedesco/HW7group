@@ -22,11 +22,13 @@ public:
 public slots:
     bool initialize(QString ip, QString port, QString name);
     void connectTo(QString clientName);
-    void updateChatWid(QString mySender, QString myMessage);
+    void disconnectNow();
 
 private slots:
     void sendMessage(QString message, QString toName);
     void receiveMess();
+    void updateChatWid(QString myWindName, QString mySender, QString myMessage);
+
 public:
     QString myName;
 

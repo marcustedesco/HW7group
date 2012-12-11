@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'clientWid2.h'
 **
-** Created: Mon Dec 10 17:59:16 2012
+** Created: Mon Dec 10 23:50:36 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,26 +23,29 @@ static const uint qt_meta_data_clientWid2[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       12,   11,   11,   11, 0x05,
+      35,   11,   11,   11, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      34,   11,   11,   11, 0x08,
-      61,   53,   11,   11, 0x08,
+      54,   11,   11,   11, 0x08,
+      74,   11,   11,   11, 0x08,
+     105,   97,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_clientWid2[] = {
-    "clientWid2\0\0buttonPushed(QString)\0"
-    "sendButtonPushed()\0friends\0"
+    "clientWid2\0\0connectPushed(QString)\0"
+    "disconnectPushed()\0sendConnectPushed()\0"
+    "sendDisconnectPushed()\0friends\0"
     "updateFriends(QStringList)\0"
 };
 
@@ -52,9 +55,11 @@ void clientWid2::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_ASSERT(staticMetaObject.cast(_o));
         clientWid2 *_t = static_cast<clientWid2 *>(_o);
         switch (_id) {
-        case 0: _t->buttonPushed((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 1: _t->sendButtonPushed(); break;
-        case 2: _t->updateFriends((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
+        case 0: _t->connectPushed((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 1: _t->disconnectPushed(); break;
+        case 2: _t->sendConnectPushed(); break;
+        case 3: _t->sendDisconnectPushed(); break;
+        case 4: _t->updateFriends((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -92,17 +97,23 @@ int clientWid2::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 5;
     }
     return _id;
 }
 
 // SIGNAL 0
-void clientWid2::buttonPushed(QString _t1)
+void clientWid2::connectPushed(QString _t1)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void clientWid2::disconnectPushed()
+{
+    QMetaObject::activate(this, &staticMetaObject, 1, 0);
 }
 QT_END_MOC_NAMESPACE

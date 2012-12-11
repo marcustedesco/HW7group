@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'clientWid2.ui'
 **
-** Created: Sun Dec 9 23:00:05 2012
+** Created: Mon Dec 10 23:50:34 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -15,6 +15,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QComboBox>
+#include <QtGui/QFrame>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QPushButton>
@@ -28,12 +29,14 @@ public:
     QGridLayout *gridLayout;
     QComboBox *clientListBox;
     QPushButton *connectButton;
+    QFrame *line;
+    QPushButton *disconnectButton;
 
     void setupUi(QWidget *clientWid2)
     {
         if (clientWid2->objectName().isEmpty())
             clientWid2->setObjectName(QString::fromUtf8("clientWid2"));
-        clientWid2->resize(297, 99);
+        clientWid2->resize(330, 120);
         gridLayout = new QGridLayout(clientWid2);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         clientListBox = new QComboBox(clientWid2);
@@ -46,6 +49,18 @@ public:
 
         gridLayout->addWidget(connectButton, 1, 0, 1, 1);
 
+        line = new QFrame(clientWid2);
+        line->setObjectName(QString::fromUtf8("line"));
+        line->setFrameShape(QFrame::HLine);
+        line->setFrameShadow(QFrame::Sunken);
+
+        gridLayout->addWidget(line, 2, 0, 1, 1);
+
+        disconnectButton = new QPushButton(clientWid2);
+        disconnectButton->setObjectName(QString::fromUtf8("disconnectButton"));
+
+        gridLayout->addWidget(disconnectButton, 3, 0, 1, 1);
+
 
         retranslateUi(clientWid2);
 
@@ -54,11 +69,12 @@ public:
 
     void retranslateUi(QWidget *clientWid2)
     {
-        clientWid2->setWindowTitle(QApplication::translate("clientWid2", "Form", 0, QApplication::UnicodeUTF8));
+        clientWid2->setWindowTitle(QApplication::translate("clientWid2", "Connection", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_ACCESSIBILITY
         clientListBox->setAccessibleName(QString());
 #endif // QT_NO_ACCESSIBILITY
-        connectButton->setText(QApplication::translate("clientWid2", "Connect", 0, QApplication::UnicodeUTF8));
+        connectButton->setText(QApplication::translate("clientWid2", "Chat", 0, QApplication::UnicodeUTF8));
+        disconnectButton->setText(QApplication::translate("clientWid2", "Disconnect", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

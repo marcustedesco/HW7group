@@ -27,6 +27,7 @@ public slots:
 private slots:
     void attemptConnect();
     void connectToClient(QString name);
+    void disconnectFromServer();
     //void sendMessage(QString message, QString toName);
 
 signals:

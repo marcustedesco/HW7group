@@ -22,7 +22,9 @@ void controller::init()
     //if the client connected to the server successfully then close window 1 and open 2
     connect(this,SIGNAL(clientMade()),wid2,SLOT(show()));
     connect(this,SIGNAL(clientMade()),wid1,SLOT(close()));
-    connect(wid2,SIGNAL(buttonPushed(QString)),this,SLOT(connectToClient(QString)));
+    connect(wid2,SIGNAL(connectPushed(QString)),this,SLOT(connectToClient(QString)));
+    //connect(wid2,SIGNAL(disconnectPushed()),this,SLOT(disconnectFromServer()));
+    //connect(wid2,SIGNAL(disconnectPushed()),wid2,SLOT(close()));
 
     wid1->show();
 }
@@ -41,13 +43,13 @@ void controller::attemptConnect()
          emit clientMade();
          wid2->setWindowTitle("Friend list for " + wid1->getName());
          connect(myClient, SIGNAL(updateUsers(QStringList)), wid2, SLOT(updateFriends(QStringList)));
-         //connect(myClient, SIGNAL(updateUsers(QString)), wid2, SLOT(updateFriends(QString)));
      }
      else
      {
          qDebug() << "another user exists with same name";
          QMessageBox msgBox;
-         msgBox.setText("Another User already exists with the same name, choose another name.");
+         msgBox.setWindowTitle("Error: Could not connect");
+         msgBox.setText("Another user already exists with the same name. Choose another name.");
          msgBox.exec();
 
      }
@@ -61,6 +63,9 @@ void controller::connectToClient(QString name)
 {
     //tell client to tell server it wants to connect to client NAME
     myClient->connectTo(name);
+}
 
-    //should also take client NAME out of the combobox so that it can not be clicked again
+void controller::disconnectFromServer()
+{
+    //myClient->disconnectNow();
 }

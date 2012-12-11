@@ -14,7 +14,10 @@ clientWid2::clientWid2(QWidget *parent) :
     ui->setupUi(this);
 
 
-    connect(ui->connectButton,SIGNAL(pressed()),this, SLOT(sendButtonPushed()));
+    connect(ui->connectButton,SIGNAL(pressed()),this, SLOT(sendConnectPushed()));
+    connect(ui->disconnectButton,SIGNAL(pressed()),this,SLOT(sendDisconnectPushed()));
+    //connect(ui->disconnectButton,SIGNAL(pressed()),this,SLOT(deleteLater()));
+
 }
 
 clientWid2::~clientWid2()
@@ -22,9 +25,14 @@ clientWid2::~clientWid2()
     delete ui;
 }
 
-void clientWid2::sendButtonPushed()
+void clientWid2::sendConnectPushed()
 {
-    emit buttonPushed(ui->clientListBox->itemText(ui->clientListBox->currentIndex()));
+    emit connectPushed(ui->clientListBox->itemText(ui->clientListBox->currentIndex()));
+}
+
+void clientWid2::sendDisconnectPushed()
+{
+    emit disconnectPushed();
 }
 
 void clientWid2::updateFriends(QStringList friends)
@@ -38,6 +46,8 @@ void clientWid2::updateFriends(QStringList friends)
     {
         ui->clientListBox->removeItem(i);
     }*/
+
+    ui->clientListBox->addItem("Group Chat");
 
     for(int i = 0; i < friends.size(); ++i)
     {

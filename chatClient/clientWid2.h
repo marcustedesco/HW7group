@@ -26,11 +26,13 @@ private:
     Ui::clientWid2 *ui;
 
 private slots:
-    void sendButtonPushed();
+    void sendConnectPushed();
+    void sendDisconnectPushed();
     void updateFriends(QStringList friends);
 
 signals:
-    void buttonPushed(QString);
+    void connectPushed(QString);
+    void disconnectPushed();
 
 };
 

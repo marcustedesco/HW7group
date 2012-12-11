@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'clientWid3.ui'
 **
-** Created: Sun Dec 9 23:00:05 2012
+** Created: Mon Dec 10 23:40:12 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -17,7 +17,6 @@
 #include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLineEdit>
-#include <QtGui/QPushButton>
 #include <QtGui/QTextEdit>
 #include <QtGui/QWidget>
 
@@ -27,9 +26,8 @@ class Ui_clientWid3
 {
 public:
     QGridLayout *gridLayout;
-    QTextEdit *messagesBox;
     QLineEdit *messageLine;
-    QPushButton *quitButton;
+    QTextEdit *messagesBox;
 
     void setupUi(QWidget *clientWid3)
     {
@@ -38,21 +36,16 @@ public:
         clientWid3->resize(537, 374);
         gridLayout = new QGridLayout(clientWid3);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        messagesBox = new QTextEdit(clientWid3);
-        messagesBox->setObjectName(QString::fromUtf8("messagesBox"));
-        messagesBox->setReadOnly(true);
-
-        gridLayout->addWidget(messagesBox, 0, 0, 1, 1);
-
         messageLine = new QLineEdit(clientWid3);
         messageLine->setObjectName(QString::fromUtf8("messageLine"));
 
         gridLayout->addWidget(messageLine, 1, 0, 1, 1);
 
-        quitButton = new QPushButton(clientWid3);
-        quitButton->setObjectName(QString::fromUtf8("quitButton"));
+        messagesBox = new QTextEdit(clientWid3);
+        messagesBox->setObjectName(QString::fromUtf8("messagesBox"));
+        messagesBox->setReadOnly(true);
 
-        gridLayout->addWidget(quitButton, 2, 0, 1, 1);
+        gridLayout->addWidget(messagesBox, 0, 0, 1, 1);
 
 
         retranslateUi(clientWid3);
@@ -65,7 +58,6 @@ public:
         clientWid3->setWindowTitle(QApplication::translate("clientWid3", "Form", 0, QApplication::UnicodeUTF8));
         messageLine->setText(QString());
         messageLine->setPlaceholderText(QApplication::translate("clientWid3", "Type your message here...", 0, QApplication::UnicodeUTF8));
-        quitButton->setText(QApplication::translate("clientWid3", "Quit", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
