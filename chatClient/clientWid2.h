@@ -27,7 +27,7 @@ private:
 
 private slots:
     void sendButtonPushed();
-    void updateFriends(QString friends);
+    void updateFriends(QStringList friends);
 
 signals:
     void buttonPushed(QString);

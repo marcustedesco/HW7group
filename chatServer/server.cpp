@@ -45,15 +45,6 @@ void server::sendWelcome()
 
     QByteArray block;
 
-    /*QDataStream out(&block, QIODevice::ReadWrite); //WriteOnly);
-    out.setVersion(QDataStream::Qt_4_0);
-
-    QString message = "Welcome to the server!";
-    out << (quint16)0;
-    out << message;
-    out.device()->seek(0);
-    out << (quint16)(block.size() - sizeof(quint16));*/
-
     QString message = "Welcome to the server!";
     block.append(message.toAscii());
 
@@ -77,7 +68,8 @@ void server::sendWelcome()
    //  clientConnection->write(block);
 
     //waits for message for ten seconds... this can be changed
-    if(clientConnection->waitForReadyRead(10000))
+    //changed to one second
+    if(clientConnection->waitForReadyRead(1000))
     {
         QByteArray in = clientConnection->readAll();
 
@@ -85,55 +77,47 @@ void server::sendWelcome()
 
         processMess(clientMess);
     }
-
-
-
-
-    //maybe maybe not?
-    //clientConnection->disconnectFromHost();
-
-    //add client connection to its own thread****
-
 }
 
 void server::processMess(QString message)
 {
 
     //Message type legend
-    // [number]*** [name]*** [message]
+    // <[number]>.:.[name].:.[possible second name].:.[message]
     // number = 1, joining server for first time, rest is name
-    // number = 2, split by "***", retrive name, receiving name, and rest is message
-    // number = 3, disconnecting from server, resy is name
+    // number = 2, split by ".:.", retrive name, receiving name, and rest is message
+    // number = 3, disconnecting from server, rest is name
 
     mutex.lock();
     bool successfullyConnected = true;
-    QStringList temp = message.split("***");
-    int num = temp.at(0).toInt();
+    QStringList temp = message.split(".:.");
+    QString numStr = temp.at(0);
 
-    qDebug() << num;
+    qDebug() << "message number string" << numStr;
     qDebug() << "size of socket list:" << myClientSockets.size();
     QString name = temp.at(1);
-    if(num == 1)
+    if(numStr == "<1>")
     {
-        QString name = temp.at(1);
+        //if client name is already taken then return <2> meaning not added to server
         if(clientList.contains(name))
         {
             successfullyConnected = false;
             QByteArray block;
-            block.append("Enameinvalid");
+            block.append("<2>");
 
             QSslSocket *clientConnection = myClientSockets.at(myClientSockets.size() - 1);
             myClientSockets.pop_back();
             clientConnection->write(block);
 
+            updateServer("Another client named " + name + " tried to connect to the server.");
         }
+        //else add the client name to the server, return <1> meaning succesful
         else
         {
             clientList.append(name);
             QByteArray block;
-            block.append("Snameadded");
+            block.append("<1>");
             successfullyConnected = true;
-
 
             QSslSocket *clientConnection = myClientSockets.at(myClientSockets.size() - 1);
             qDebug() << "Message created to send back to client: " << QString(block);
@@ -146,19 +130,25 @@ void server::processMess(QString message)
             connect(thisClientThread, SIGNAL(messageReceived(QString)), this, SLOT(processMess(QString)));
             thisClientThread->start();
 
+            updateServer(name + " was added to the server.");
         }
     }
-    else if(num == 2)
+    else if(numStr == "<2>")
     {
         //Direct message correctly
         QString receiver = temp.at(2);
         QSslSocket* receiverConnection = myClientSockets.at(clientList.indexOf(receiver));
         //myClientThreads.at(clientList.indexOf(receiver))->wait(2000);
         qDebug() << "receiver Index: " << clientList.indexOf(receiver);
+
         QByteArray block;
-        block.append(message);
-        qDebug() << "Created block to send";
+
+        QString newMessage = "<4>.:." + temp.at(1) + ".:." + temp.at(3);
+
+        block.append(newMessage);
+
         receiverConnection->write(block);
+
         if(receiverConnection->waitForBytesWritten(10000))
         {
             qDebug() << "sent message to client";
@@ -166,34 +156,40 @@ void server::processMess(QString message)
 
         successfullyConnected = false;
 
+        updateServer(temp.at(1) + ">" + receiver + ": " + temp.at(3));
     }
-    else if(num == 3)
+    else if(numStr == "<3>")
     {
         //Disconnect client
         updateServer(name + "disconnected");
         int position = clientList.indexOf(name);
         clientList.removeAt(position);
         myClientSockets.removeAt(position);
+        ClientThread *thisClientThread = myClientThreads.at(position);
+        thisClientThread->terminate();
+        myClientThreads.removeAt(position);
+
+        successfullyConnected = true;
     }
     else
     {
         qDebug() << "Should never reach here";
     }
     qDebug() << "Messaged received from client: " + message;
-    updateServer("Messaged received from client: " + message);
+    //updateServer("Messaged received from client: " + message);
 
     if(successfullyConnected)
     {
         if(myClientSockets.at(myClientSockets.size()-1)->waitForBytesWritten(3000))
         {
             QByteArray block;
-            block.append("UsersOnServer:");
+            block.append("<3>.:.");
             for(int i = 0; i < clientList.size(); ++i)
             {
                 block.append(clientList.at(i));
                 if(i < clientList.size() - 1)
                 {
-                    block.append("***");
+                    block.append(".:.");
                 }
             }
             for(int i = 0; i < myClientSockets.size(); ++i)
@@ -205,24 +201,4 @@ void server::processMess(QString message)
     }
 
     mutex.unlock();
-
-    /*QSslSocket* thisConnection = myClientSockets.pop_back();
-
-    QByteArray incoming = thisConnection->readAll();
-
-    QString message = QString(incoming);
-
-    qDebug() << "Message received from client: " + message;
-
-    return;*/
-
-    /*QByteArray in = tempSocket->readAll();
-
-    QString message = QString(in);
-
-    qDebug() << "Messaged received from client: " + message;
-    updateServer(message);
-*/
-
-
 }

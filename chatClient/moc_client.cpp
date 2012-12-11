@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'client.h'
 **
-** Created: Sun Dec 9 23:00:14 2012
+** Created: Mon Dec 10 18:52:55 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_client[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -34,18 +34,20 @@ static const uint qt_meta_data_client[] = {
       14,    8,    7,    7, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      53,   40,   35,    7, 0x0a,
-     100,   89,    7,    7, 0x0a,
-     134,  119,    7,    7, 0x08,
-     163,    7,    7,    7, 0x08,
+      57,   44,   39,    7, 0x0a,
+     104,   93,    7,    7, 0x0a,
+     142,  123,    7,    7, 0x0a,
+     188,  173,    7,    7, 0x08,
+     217,    7,    7,    7, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_client[] = {
-    "client\0\0users\0updateUsers(QString)\0"
+    "client\0\0users\0updateUsers(QStringList)\0"
     "bool\0ip,port,name\0initialize(QString,QString,QString)\0"
     "clientName\0connectTo(QString)\0"
+    "mySender,myMessage\0updateChatWid(QString,QString)\0"
     "message,toName\0sendMessage(QString,QString)\0"
     "receiveMess()\0"
 };
@@ -56,12 +58,13 @@ void client::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         Q_ASSERT(staticMetaObject.cast(_o));
         client *_t = static_cast<client *>(_o);
         switch (_id) {
-        case 0: _t->updateUsers((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 0: _t->updateUsers((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
         case 1: { bool _r = _t->initialize((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 2: _t->connectTo((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 3: _t->sendMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 4: _t->receiveMess(); break;
+        case 3: _t->updateChatWid((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 4: _t->sendMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 5: _t->receiveMess(); break;
         default: ;
         }
     }
@@ -99,15 +102,15 @@ int client::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 6;
     }
     return _id;
 }
 
 // SIGNAL 0
-void client::updateUsers(QString _t1)
+void client::updateUsers(QStringList _t1)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

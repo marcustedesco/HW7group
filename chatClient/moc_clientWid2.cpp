@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'clientWid2.h'
 **
-** Created: Sun Dec 9 23:00:16 2012
+** Created: Mon Dec 10 17:59:16 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -43,7 +43,7 @@ static const uint qt_meta_data_clientWid2[] = {
 static const char qt_meta_stringdata_clientWid2[] = {
     "clientWid2\0\0buttonPushed(QString)\0"
     "sendButtonPushed()\0friends\0"
-    "updateFriends(QString)\0"
+    "updateFriends(QStringList)\0"
 };
 
 void clientWid2::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -54,7 +54,7 @@ void clientWid2::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->buttonPushed((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 1: _t->sendButtonPushed(); break;
-        case 2: _t->updateFriends((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 2: _t->updateFriends((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
         default: ;
         }
     }

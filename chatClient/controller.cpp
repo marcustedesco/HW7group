@@ -40,7 +40,8 @@ void controller::attemptConnect()
          qDebug() << "Successfully connected to the server";
          emit clientMade();
          wid2->setWindowTitle("Friend list for " + wid1->getName());
-         connect(myClient, SIGNAL(updateUsers(QString)), wid2, SLOT(updateFriends(QString)));
+         connect(myClient, SIGNAL(updateUsers(QStringList)), wid2, SLOT(updateFriends(QStringList)));
+         //connect(myClient, SIGNAL(updateUsers(QString)), wid2, SLOT(updateFriends(QString)));
      }
      else
      {

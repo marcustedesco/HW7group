@@ -27,21 +27,23 @@ void clientWid2::sendButtonPushed()
     emit buttonPushed(ui->clientListBox->itemText(ui->clientListBox->currentIndex()));
 }
 
-void clientWid2::updateFriends(QString friends)
+void clientWid2::updateFriends(QStringList friends)
 {
-    QStringList users = friends.split("***");
-    qDebug() << users.size();
+    //QStringList users = friends.split("***");
+    //qDebug() << users.size();
 
-    for(int i = 0; i < (ui->clientListBox->count()); ++i)
+    ui->clientListBox->clear();
+
+    /*for(int i = 0; i < (ui->clientListBox->count()); ++i)
     {
         ui->clientListBox->removeItem(i);
-    }
+    }*/
 
-    for(int i = 0; i < users.size(); ++i)
+    for(int i = 0; i < friends.size(); ++i)
     {
-        qDebug() << users.at(i);
+        qDebug() << "adding this friend: " + friends.at(i);
 
-        ui->clientListBox->addItem(users.at(i));
+        ui->clientListBox->addItem(friends.at(i));
 
     }
 }

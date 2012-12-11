@@ -22,6 +22,7 @@ public:
 public slots:
     bool initialize(QString ip, QString port, QString name);
     void connectTo(QString clientName);
+    void updateChatWid(QString mySender, QString myMessage);
 
 private slots:
     void sendMessage(QString message, QString toName);
@@ -36,7 +37,7 @@ private:
     QString hostName;
     int portNum;
 signals:
-    void updateUsers(QString users);
+    void updateUsers(QStringList users);
 };
 
 #endif // CLIENT_H

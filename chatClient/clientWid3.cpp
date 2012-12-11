@@ -21,10 +21,10 @@ clientWid3::~clientWid3()
     delete ui;
 }
 
-void clientWid3::setName(QString friendName)
+void clientWid3::setFriendName(QString friendName)
 {
     toName = friendName;
-    this->setWindowTitle("Chat with " + toName);
+    this->setWindowTitle(myName + "'s chat with " + toName);
 }
 
 void clientWid3::setMyName(QString name)
@@ -41,7 +41,7 @@ void clientWid3::sendMessage()
         colorName.append(myName);
         colorName.append("</font></b></html>");
         colorName.append(">" + ui->messageLine->text());
-        ui->messagesBox->append(colorName);//myName + "> " + ui->messageLine->text());
+        ui->messagesBox->append(colorName);
         ui->messageLine->clear();
 
     }

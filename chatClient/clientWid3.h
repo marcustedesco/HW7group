@@ -21,7 +21,7 @@ public:
     explicit clientWid3(QWidget *parent = 0);
     ~clientWid3();
 
-    void setName(QString friendName);
+    void setFriendName(QString friendName);
     void setMyName(QString name);
     QString getName();
 private:

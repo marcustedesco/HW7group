@@ -23,8 +23,6 @@ client::client(QObject *parent) :
     QObject(parent)
 {
     secureSocket = new QSslSocket(this);
-
-   // connect(secureSocket, SIGNAL(readyRead()), this, SLOT(receiveMess()));
 }
 
 bool client::initialize(QString ip, QString port, QString name)
@@ -37,7 +35,6 @@ bool client::initialize(QString ip, QString port, QString name)
     myName = name;
 
     bool returnVal = false;
-
 
     secureSocket->abort();
     secureSocket->setPeerVerifyMode(QSslSocket::QueryPeer);
@@ -54,7 +51,8 @@ bool client::initialize(QString ip, QString port, QString name)
 
     QByteArray block;
 
-    block.append("1***" + name.toAscii());
+    //changing the delimiter. can explain why later
+    block.append("<1>.:." + name.toAscii());
 
     qDebug() << "Created QByteArray to send to server: " + QString(block);
 
@@ -67,22 +65,19 @@ bool client::initialize(QString ip, QString port, QString name)
         QByteArray in = secureSocket->readAll();
 
         QString serverMess = QString(in);
-        if(QString::compare(serverMess, "Snameadded", Qt::CaseSensitive) == 0)
+        if(QString::compare(serverMess, "<1>", Qt::CaseSensitive) == 0)
         {
             returnVal = true;
-            qDebug() << "added to server";
+            qDebug() << "Added to server";
             connect(secureSocket, SIGNAL(readyRead()), this, SLOT(receiveMess()));
         }
-        else if(QString::compare(serverMess, "Enameinvalid", Qt::CaseSensitive) == 0)
+        else if(QString::compare(serverMess, "<2>", Qt::CaseSensitive) == 0)
         {
             returnVal = false;
-            qDebug() << "username already taken";
+            qDebug() << "Username already taken";
         }
         qDebug() << "*************Message from server:************** 1" << serverMess;
     }
-
-    //maybe keep connection open
-    //secureSocket->disconnectFromHost();
 
     return returnVal;
 }
@@ -92,9 +87,9 @@ void client::connectTo(QString clientName)
     //connects this client to the CLIENTNAME
     clientWid3* myWid3 = new clientWid3();
 
-    myWid3->setName(clientName);
-    qDebug() << "Client Name: " + clientName;
     myWid3->setMyName(myName);
+    myWid3->setFriendName(clientName);
+    qDebug() << "Client Name: " + clientName;
 
     connect(myWid3,SIGNAL(send(QString,QString)),this,SLOT(sendMessage(QString,QString)));
 
@@ -105,25 +100,43 @@ void client::connectTo(QString clientName)
 
 void client::sendMessage(QString message, QString toName)
 {
-    //sends MESSAGE from myClient to TONAME
-
-    qDebug() << "send: " << message << " to: " << toName;
-
     qDebug() << "Successfully waited for secure handshake with server...";
 
-    qDebug() << "Creating first message from: " + myName + " *** " + toName + " *** " + message;
+    qDebug() << "Creating first message from: " + myName + " .:. " + toName + " .:. " + message;
 
     QByteArray block;
 
-    block.append("2***" + myName.toAscii() + "***" + toName.toAscii() + "***" + message.toAscii());
+    block.append("<2>.:." + myName.toAscii() + ".:." + toName.toAscii() + ".:." + message.toAscii());
 
     qDebug() << "Created QByteArray to send to server: " + QString(block);
 
     //connect(clientConnection, SIGNAL(disconnected()),clientConnection, SLOT(deleteLater()));
 
     secureSocket->write(block);
-    //maybe keep connection open
-    //secureSocket->disconnectFromHost();
+}
+
+void client::updateChatWid(QString mySender, QString myMessage)
+{
+    clientWid3* senderWid;
+    bool foundWindow = false;
+
+    for(int i = 0; i < myFriends.size(); ++i)
+    {
+        if(QString::compare(myFriends.at(i)->getName(), mySender, Qt::CaseSensitive) == 0)
+        {
+            senderWid = myFriends.at(i);
+            foundWindow = true;
+            break;
+        }
+    }
+    if(foundWindow)
+    {
+        QString colorName = "<html><b><font color=blue>";
+        colorName.append(mySender);
+        colorName.append("</font></b></html>");
+        colorName.append(">" + myMessage);
+        senderWid->update(colorName);
+    }
 }
 
 void client::receiveMess()
@@ -136,73 +149,44 @@ void client::receiveMess()
 
     qDebug() << "*************Message from server:************** 2" << message;
 
-    if(message.contains(":"))
+    QStringList splitMessage = message.split(".:.");
+
+    if(splitMessage.at(0) == "<3>")
     {
-        QStringList tempList = message.split(":");
-        qDebug() << tempList.at(0);
-        if(QString::compare(tempList.at(0), "UsersOnServer", Qt::CaseSensitive) == 0)
-        {
-            qDebug() << "correct";
-            emit updateUsers(tempList.at(1));
-            qDebug() << "Users signal emitted";
-        }
+        splitMessage.removeAt(0);
+        for(int i = 0; i < splitMessage.size(); i++)
+            qDebug() << "user in client: " + splitMessage.at(i);
+        emit updateUsers(splitMessage);
     }
 
-    QStringList tempList2 = message.split("***");
     QString sender;
-    if(QString::compare(tempList2.at(0), "2", Qt::CaseSensitive) == 0)
+
+    if(splitMessage.at(0) == "<4>")
     {
-        sender = tempList2.at(1);
+        sender = splitMessage.at(1);
+
         qDebug() << "sender: " +  sender;
+
         bool openWind = false;
-        clientWid3* senderWid;
+
         for(int i = 0; i < myFriends.size(); ++i)
         {
-            qDebug() << "friends name:"+  myFriends.at(i)->getName();
             if(QString::compare(myFriends.at(i)->getName(), sender, Qt::CaseSensitive) == 0)
             {
                 openWind = true;
-                senderWid = myFriends.at(i);
                 qDebug() << "Window already open";
 
                 break;
             }
 
         }
-        if(openWind)
-        {
-            QString colorName = "<html><b><font color=blue>";
-            colorName.append(tempList2.at(1));
-            colorName.append("</font></b></html>");
-            colorName.append(">" + tempList2.at(3));
-            senderWid->update(colorName);
-        }
-        else
+        if(!openWind)
         {
             qDebug() << "Window Not open";
-            clientWid3* myWid3 = new clientWid3();
-
-            myWid3->setName(sender);
-            myWid3->setMyName(myName);
-
-            connect(myWid3,SIGNAL(send(QString,QString)),this,SLOT(sendMessage(QString,QString)));
-
-            myWid3->show();
-
-            myFriends.push_back(myWid3);
-            myWid3->update(tempList2.at(1)+ "> "+ tempList2.at(3));
+            connectTo(sender);
         }
+
+        updateChatWid(sender, splitMessage.at(2));
     }
-
-
-
-    //if(message == "Welcome to the server!")
-    //    return;
-
-    //clientWid3 thisWindow = myFriends.pop_back();
-    //thisWindow->update(message);
-
-    //update the correct client window
-    //myfriends....myWid3->update(message);
 }
 

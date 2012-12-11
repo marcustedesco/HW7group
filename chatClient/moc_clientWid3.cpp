@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'clientWid3.h'
 **
-** Created: Sun Dec 9 23:00:17 2012
+** Created: Mon Dec 10 17:59:16 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
