@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'clientWid2.ui'
 **
-** Created: Mon Dec 10 23:50:34 2012
+** Created: Tue Dec 11 02:37:12 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -17,6 +17,7 @@
 #include <QtGui/QComboBox>
 #include <QtGui/QFrame>
 #include <QtGui/QGridLayout>
+#include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QPushButton>
 #include <QtGui/QWidget>
@@ -27,6 +28,7 @@ class Ui_clientWid2
 {
 public:
     QGridLayout *gridLayout;
+    QHBoxLayout *horizontalLayout;
     QComboBox *clientListBox;
     QPushButton *connectButton;
     QFrame *line;
@@ -36,30 +38,36 @@ public:
     {
         if (clientWid2->objectName().isEmpty())
             clientWid2->setObjectName(QString::fromUtf8("clientWid2"));
-        clientWid2->resize(330, 120);
+        clientWid2->resize(449, 48);
         gridLayout = new QGridLayout(clientWid2);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         clientListBox = new QComboBox(clientWid2);
         clientListBox->setObjectName(QString::fromUtf8("clientListBox"));
+        clientListBox->setFocusPolicy(Qt::TabFocus);
 
-        gridLayout->addWidget(clientListBox, 0, 0, 1, 1);
+        horizontalLayout->addWidget(clientListBox);
 
         connectButton = new QPushButton(clientWid2);
         connectButton->setObjectName(QString::fromUtf8("connectButton"));
 
-        gridLayout->addWidget(connectButton, 1, 0, 1, 1);
+        horizontalLayout->addWidget(connectButton);
 
         line = new QFrame(clientWid2);
         line->setObjectName(QString::fromUtf8("line"));
-        line->setFrameShape(QFrame::HLine);
+        line->setFrameShape(QFrame::VLine);
         line->setFrameShadow(QFrame::Sunken);
 
-        gridLayout->addWidget(line, 2, 0, 1, 1);
+        horizontalLayout->addWidget(line);
 
         disconnectButton = new QPushButton(clientWid2);
         disconnectButton->setObjectName(QString::fromUtf8("disconnectButton"));
 
-        gridLayout->addWidget(disconnectButton, 3, 0, 1, 1);
+        horizontalLayout->addWidget(disconnectButton);
+
+
+        gridLayout->addLayout(horizontalLayout, 0, 0, 1, 1);
 
 
         retranslateUi(clientWid2);

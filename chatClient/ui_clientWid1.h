@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'clientWid1.ui'
 **
-** Created: Sun Dec 9 23:00:05 2012
+** Created: Tue Dec 11 02:30:53 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -45,7 +45,7 @@ public:
     {
         if (clientWid1->objectName().isEmpty())
             clientWid1->setObjectName(QString::fromUtf8("clientWid1"));
-        clientWid1->resize(428, 206);
+        clientWid1->resize(232, 206);
         gridLayout = new QGridLayout(clientWid1);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         label = new QLabel(clientWid1);

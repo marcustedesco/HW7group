@@ -9,6 +9,7 @@ server::server(QObject *parent) :
     }
 
     QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
+
     // use the first non-localhost IPv4 address
     for (int i = 0; i < ipAddressesList.size(); ++i) {
         if (ipAddressesList.at(i) != QHostAddress::LocalHost &&
@@ -43,13 +44,11 @@ void server::sendWelcome()
     }
 
     qDebug() << "Successfully waited for secure handshake with the client...";
-    //updateServer("Successfully waited for secure handshake with the client...");
 
-    connect(clientConnection, SIGNAL(disconnected()),clientConnection, SLOT(deleteLater()));
+    //connect(clientConnection, SIGNAL(disconnected()),clientConnection, SLOT(deleteLater()));
+
     myClientSockets.push_back(clientConnection);
 
-    //waits for message for ten seconds... this can be changed
-    //changed to one second
     if(clientConnection->waitForReadyRead(1000))
     {
         QByteArray in = clientConnection->readAll();
@@ -62,21 +61,31 @@ void server::sendWelcome()
 
 void server::processMess(QString message)
 {
-
+/*  OLD LEGEND
     //Message type legend
     // <[number]>.:.[name].:.[possible second name].:.[message]
     // number = 1, joining server for first time, rest is name
     // number = 2, split by ".:.", retrive name, receiving name, and rest is message
     // number = 3, disconnecting from server, rest is name
+*/
 
     mutex.lock();
     bool usersChanged = true;
     QStringList temp = message.split(".:.");
     QString numStr = temp.at(0);
 
-    qDebug() << "message number string" << numStr;
-    qDebug() << "size of socket list:" << myClientSockets.size();
+    qDebug() << "Message number string" << numStr;
+    qDebug() << "Size of socket list:" << myClientSockets.size();
+
     QString name = temp.at(1);
+
+    qDebug() << "Messaged received from client: " + message;
+
+    //<1>
+    //<1>.:.NAME(of possible client)
+    //Checks if client can be added to server
+    //      returns <2> if name is taken
+    //      returns <1> if name is added
     if(numStr == "<1>")
     {
         //if client name is already taken then return <2> meaning not added to server
@@ -114,6 +123,11 @@ void server::processMess(QString message)
             updateServer(name + " was added to the server.");
         }
     }
+
+    //<2>
+    //<2>.:.sender.:.receiver.:.message
+    //Direct messages between clients
+    //      returns <4>.:.sender.:.message
     else if(numStr == "<2>")
     {
         //Direct message correctly
@@ -139,6 +153,10 @@ void server::processMess(QString message)
 
         updateServer(temp.at(1) + ">" + receiver + ": " + temp.at(3));
     }
+
+    //<3>
+    //<3>.:.client name
+    //Disconnects the client from the server
     else if(numStr == "<3>")
     {
         //Disconnect client
@@ -152,6 +170,11 @@ void server::processMess(QString message)
 
         usersChanged = true;
     }
+
+    //<4>
+    //<4>.:.sender.:.message
+    //Sends a message to all the clients on the server
+    //      returns <5>.:.sender.:.message
     else if(numStr == "<4>")
     {
         QSslSocket* receiverConnection;
@@ -183,8 +206,6 @@ void server::processMess(QString message)
     {
         qDebug() << "Should never reach here";
     }
-    qDebug() << "Messaged received from client: " + message;
-    //updateServer("Messaged received from client: " + message);
 
     if(usersChanged)
     {

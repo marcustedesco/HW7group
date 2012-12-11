@@ -8,15 +8,15 @@
 
 /*
   changes to make:
-    -if client1 sends message to client2 and a window is not open, open new window
+   X-if client1 sends message to client2 and a window is not open, open new window
     -move the quit/disconnect button to the window2 with clientlist because this is
         where the client should be able to disconnect from the server
     -disconnecting should update the clientlist combobox on all the clients
     -disconnecting should close all the conversation windows that client current has open
     -if the client1 disconnects while talking to client2, it should say client1 disconnected.
-    -maybe add group chat?
+   X-maybe add group chat?
 
-    -delimiter needs to be changed! this gets seriously messed up when sent quickly
+   X-delimiter needs to be changed! this gets seriously messed up when sent quickly
 */
 
 client::client(QObject *parent) :
